@@ -4,7 +4,7 @@ on:
   workflow_dispatch:  # Déclenchement manuel
   push:
     branches:
-      - main
+      - master
     paths:
       - 'data/saisons.yaml'  # Déclencher quand les données changent
   schedule:
