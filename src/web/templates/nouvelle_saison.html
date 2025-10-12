@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Nouvelle Saison - Suivi Chaudière{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <h1>Créer une Nouvelle Saison</h1>
+    <a href="{{ url_for('index') }}" class="btn btn-secondary">Retour</a>
+</div>
+
+<div class="card">
+    <form method="POST" action="{{ url_for('nouvelle_saison') }}">
+        <div class="form-group">
+            <label for="nom">Nom de la saison (ex: 2024-2025)</label>
+            <input type="text" id="nom" name="nom" required placeholder="2024-2025">
+        </div>
+
+        <div class="form-group">
+            <label for="date_debut">Date de début</label>
+            <input type="date" id="date_debut" name="date_debut" required>
+        </div>
+
+        <div style="margin-top: 30px;">
+            <button type="submit" class="btn btn-success">Créer la Saison</button>
+            <a href="{{ url_for('index') }}" class="btn btn-secondary">Annuler</a>
+        </div>
+    </form>
+</div>
+
+<div class="card" style="margin-top: 30px; background-color: #e7f3ff;">
+    <h3>Information</h3>
+    <p>Une saison de chauffe représente une période de chauffage, généralement du 1er septembre au 30 juin de l'année suivante.</p>
+    <p>Vous pourrez ensuite ajouter des relevés réguliers à cette saison pour suivre la consommation et le rendement de votre chaudière.</p>
+</div>
+{% endblock %}

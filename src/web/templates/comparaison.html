@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}Comparaison des Saisons{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <h1>Comparaison des Saisons</h1>
+    <a href="{{ url_for('index') }}" class="btn btn-secondary">Retour</a>
+</div>
+
+{% if saisons %}
+    <div class="card">
+        <h3>Rapports et Graphiques</h3>
+        <p>Générez des rapports et graphiques comparant toutes les saisons de chauffe.</p>
+        <div style="margin-top: 20px;">
+            <a href="{{ url_for('rapport_comparaison_html') }}" class="btn">Rapport HTML</a>
+            <a href="{{ url_for('graphique_comparaison') }}" class="btn btn-success">Graphiques de Comparaison</a>
+            <a href="{{ url_for('graphique_rendements_compares') }}" class="btn btn-success">Évolution des Rendements</a>
+        </div>
+    </div>
+
+    <h2 style="margin-top: 40px;">Saisons Disponibles</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Saison</th>
+                <th>Période</th>
+                <th>Relevés</th>
+                <th>Conso Totale (m³)</th>
+                <th>DJU Total</th>
+                <th>Rendement Moyen</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for saison in saisons %}
+            <tr>
+                <td><strong>{{ saison.nom }}</strong></td>
+                <td>
+                    {{ saison.date_debut.strftime('%d/%m/%Y') }} -
+                    {% if saison.date_fin %}
+                        {{ saison.date_fin.strftime('%d/%m/%Y') }}
+                    {% else %}
+                        <span style="color: #28a745;">En cours</span>
+                    {% endif %}
+                </td>
+                <td>{{ saison.releves|length }}</td>
+                <td style="text-align: right;">
+                    {% if saison.releves|length > 1 %}
+                        {{ "%.2f"|format(saison.get_conso_totale_gaz()) }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+                <td style="text-align: right;">
+                    {% if saison.releves|length > 0 %}
+                        {{ "%.1f"|format(saison.get_dju_total()) }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+                <td style="text-align: right;">
+                    {% if saison.get_rendement_moyen() %}
+                        <strong>{{ "%.2f"|format(saison.get_rendement_moyen()) }}%</strong>
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ url_for('saison_detail', nom=saison.nom) }}" class="btn btn-small">Détails</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <div class="card">
+        <p>Aucune saison disponible pour la comparaison.</p>
+        <p style="margin-top: 15px;">
+            <a href="{{ url_for('nouvelle_saison') }}" class="btn btn-success">Créer une Saison</a>
+        </p>
+    </div>
+{% endif %}
+{% endblock %}

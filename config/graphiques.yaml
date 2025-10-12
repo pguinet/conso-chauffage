@@ -1,0 +1,51 @@
+# Configuration des échelles des graphiques
+
+# Échelles pour les graphiques de comparaison des saisons
+echelles_comparaison:
+  # Rendement moyen (%)
+  rendement_moyen:
+    y_min: 100
+    y_max: null  # null = automatique
+    
+  # Consommation totale de gaz (m³)
+  conso_totale_gaz:
+    y_min: 30000
+    y_max: null
+    
+  # Consommation par DJU (m³/DJU)
+  conso_par_dju:
+    y_min: 15
+    y_max: null
+    
+  # Calories par DJU (MWh/DJU)
+  calories_par_dju:
+    y_min: 0
+    y_max: null
+
+# Échelles pour les graphiques d'évolution par saison
+echelles_saison:
+  # Rendement par relevé (%)
+  rendement:
+    y_min: 80
+    y_max: null
+    
+  # Consommation de gaz par DJU (m³/DJU)
+  conso_gaz_par_dju:
+    y_min: 10
+    y_max: null
+    
+  # Calories produites par DJU (MWh/DJU)
+  calories_par_dju:
+    y_min: 0
+    y_max: null
+
+# Autres paramètres des graphiques
+parametres:
+  # Afficher les lignes de grille
+  show_grid: true
+  
+  # Hauteur des graphiques (pixels)
+  hauteur_graphique: 500
+  
+  # Couleurs par défaut (palette)
+  palette: "Plotly"

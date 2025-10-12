@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block title %}Saison {{ saison.nom }} - Suivi Chaudière{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <h1>Saison {{ saison.nom }}</h1>
+    <a href="{{ url_for('index') }}" class="btn btn-secondary">Retour</a>
+</div>
+
+<div class="card">
+    <h3>Informations Générales</h3>
+    <p><strong>Date de début:</strong> {{ saison.date_debut.strftime('%d/%m/%Y') }}</p>
+    <p><strong>Date de fin:</strong>
+        {% if saison.date_fin %}
+            {{ saison.date_fin.strftime('%d/%m/%Y') }}
+        {% else %}
+            <span style="color: #28a745;">En cours</span>
+            <form method="POST" action="{{ url_for('terminer_saison', nom=saison.nom) }}" style="display: inline; margin-left: 20px;">
+                <input type="date" name="date_fin" required style="width: auto; display: inline;">
+                <button type="submit" class="btn btn-small btn-danger">Terminer la saison</button>
+            </form>
+        {% endif %}
+    </p>
+    <p><strong>Nombre de relevés:</strong> {{ saison.releves|length }}</p>
+</div>
+
+{% if saison.releves|length > 1 %}
+<div class="stats">
+    <div class="stat-card">
+        <div class="stat-label">Consommation Totale Gaz</div>
+        <div class="stat-value">{{ "%.2f"|format(saison.get_conso_totale_gaz()) }} m³</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-label">Calories Totales</div>
+        <div class="stat-value">{{ "%.2f"|format(saison.get_calories_totales()) }}</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-label">DJU Total</div>
+        <div class="stat-value">{{ "%.1f"|format(saison.get_dju_total()) }}</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-label">Rendement Moyen</div>
+        <div class="stat-value">
+            {% if saison.get_rendement_moyen() %}
+                {{ "%.2f"|format(saison.get_rendement_moyen()) }}%
+            {% else %}
+                -
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<div style="margin: 30px 0;">
+    <a href="{{ url_for('nouveau_releve', nom=saison.nom) }}" class="btn btn-success">Ajouter un Relevé</a>
+    <a href="{{ url_for('rapport_saison_html', nom=saison.nom) }}" class="btn btn-secondary">Rapport HTML</a>
+    <a href="{{ url_for('rapport_saison_csv', nom=saison.nom) }}" class="btn btn-secondary">Télécharger CSV</a>
+    {% if saison.releves|length > 1 %}
+        <a href="{{ url_for('graphique_rendement', nom=saison.nom) }}" class="btn">Graphique Rendement</a>
+        <a href="{{ url_for('graphique_complet', nom=saison.nom) }}" class="btn">Graphiques Complets</a>
+    {% endif %}
+</div>
+
+<h2>Relevés</h2>
+{% if saison.releves %}
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th style="text-align: right;">Index Gaz (m³)</th>
+                <th style="text-align: right;">Index Calories</th>
+                <th style="text-align: right;">DJU</th>
+                <th style="text-align: right;">Conso Gaz (m³)</th>
+                <th style="text-align: right;">Conso/DJU</th>
+                <th style="text-align: right;">Rendement (%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for releve in saison.releves %}
+            <tr>
+                <td>{{ releve.date_releve.strftime('%d/%m/%Y') }}</td>
+                <td style="text-align: right;">{{ "%.2f"|format(releve.index_gaz) }}</td>
+                <td style="text-align: right;">{{ "%.2f"|format(releve.index_calories) }}</td>
+                <td style="text-align: right;">{{ "%.1f"|format(releve.dju) }}</td>
+                <td style="text-align: right;">
+                    {% if releve.conso_gaz is not none %}
+                        {{ "%.2f"|format(releve.conso_gaz) }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+                <td style="text-align: right;">
+                    {% if releve.conso_gaz_par_dju is not none %}
+                        {{ "%.4f"|format(releve.conso_gaz_par_dju) }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+                <td style="text-align: right;">
+                    {% if releve.rendement is not none %}
+                        <strong>{{ "%.2f"|format(releve.rendement) }}%</strong>
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>Aucun relevé enregistré pour cette saison.</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,50 @@
+name: Génération des Rapports
+
+on:
+  workflow_dispatch:  # Déclenchement manuel
+  push:
+    branches:
+      - main
+    paths:
+      - 'data/saisons.yaml'  # Déclencher quand les données changent
+  schedule:
+    - cron: '0 0 1 * *'  # Exécution mensuelle le 1er du mois à minuit
+
+jobs:
+  generate-reports:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Create output directory
+        run: mkdir -p output
+
+      - name: Generate all reports
+        run: python scripts/generate_all_reports.py
+
+      - name: Upload reports as artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: rapports-chaudiere
+          path: output/
+          retention-days: 90
+
+      - name: Deploy to GitHub Pages (optional)
+        if: github.ref == 'refs/heads/main'
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./output
+          destination_dir: rapports

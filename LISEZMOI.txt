@@ -1,0 +1,47 @@
+═══════════════════════════════════════════════════════════════
+   APPLICATION DE SUIVI DE CONSOMMATION DE CHAUDIÈRE
+═══════════════════════════════════════════════════════════════
+
+📋 DÉMARRAGE EN 3 COMMANDES :
+
+    python3 -m venv venv
+    source venv/bin/activate
+    ./start.sh
+
+🌐 Puis ouvrez : http://localhost:5000
+
+═══════════════════════════════════════════════════════════════
+
+📚 DOCUMENTATION :
+
+    • DEMARRAGE_RAPIDE.md  → Guide ultra-simple
+    • INSTALL.md           → Installation détaillée + dépannage
+    • README.md            → Documentation complète
+    • CLAUDE.md            → Architecture technique
+
+═══════════════════════════════════════════════════════════════
+
+🔧 PROBLÈMES COURANTS :
+
+    ❌ "externally-managed-environment"
+       → Normal ! Utilisez venv (voir ci-dessus)
+
+    ❌ "ModuleNotFoundError: No module named 'flask'"
+       → Activez le venv : source venv/bin/activate
+       → Installez : pip install -r requirements.txt
+
+    ❌ "command not found: python"
+       → Utilisez python3 au lieu de python
+
+═══════════════════════════════════════════════════════════════
+
+✅ VÉRIFIER QUE TOUT FONCTIONNE :
+
+    python3 check_syntax.py
+
+═══════════════════════════════════════════════════════════════
+
+Windows : Remplacez "source venv/bin/activate" par "venv\Scripts\activate"
+          Et utilisez "start.bat" au lieu de "./start.sh"
+
+═══════════════════════════════════════════════════════════════

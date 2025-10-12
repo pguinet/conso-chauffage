@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(chmod:*)",
+      "Bash(python:*)",
+      "Bash(python3:*)",
+      "Bash(find:*)",
+      "WebFetch(domain:www.infoclimat.fr)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

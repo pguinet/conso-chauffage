@@ -1,0 +1,178 @@
+{% extends "base.html" %}
+
+{% block title %}Nouveau Relevé - {{ saison.nom }}{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <h1>Nouveau Relevé - Saison {{ saison.nom }}</h1>
+    <a href="{{ url_for('saison_detail', nom=saison.nom) }}" class="btn btn-secondary">Retour</a>
+</div>
+
+<div class="card">
+    <form method="POST" action="{{ url_for('nouveau_releve', nom=saison.nom) }}">
+        <div class="form-group">
+            <label for="date_releve">Date du relevé</label>
+            <input type="date" id="date_releve" name="date_releve" required>
+        </div>
+
+        <div class="form-group">
+            <label for="index_gaz">Index compteur gaz (m³)</label>
+            <input type="number" id="index_gaz" name="index_gaz" step="0.01" required placeholder="125430.50">
+        </div>
+
+        <div class="form-group">
+            <label for="index_calories">Index compteur calories</label>
+            <input type="number" id="index_calories" name="index_calories" step="0.01" required placeholder="456780.25">
+        </div>
+
+        <div class="form-group">
+            <label for="dju">DJU (Degrés Jours Unifiés) depuis le dernier relevé</label>
+            <div style="display: flex; gap: 10px; align-items: flex-start;">
+                <input type="number" id="dju" name="dju" step="0.1" required placeholder="145.5" style="flex: 1;">
+                {% if saison.releves %}
+                <button type="button" id="btn-calcul-dju" class="btn" style="white-space: nowrap;">
+                    🔄 Calculer automatiquement
+                </button>
+                {% endif %}
+            </div>
+            {% if not saison.releves %}
+            <div style="margin-top: 10px; padding: 15px; background-color: #fff3cd; border-left: 4px solid #ffc107; border-radius: 4px;">
+                <strong style="font-size: 1.1em; color: #856404;">⚠️ Premier relevé de la saison</strong>
+                <p style="margin: 5px 0 0 0; color: #856404; font-size: 1em;">
+                    Pour le premier relevé, saisissez <strong>0</strong> dans le champ DJU (relevé de référence).
+                </p>
+            </div>
+            {% else %}
+            <small style="display: block; margin-top: 5px; color: #666;">
+                Pour le premier relevé de la saison, mettre 0
+            </small>
+            {% endif %}
+            <div id="dju-status" style="margin-top: 10px; padding: 10px; border-radius: 4px; display: none;"></div>
+        </div>
+
+        <div style="margin-top: 30px;">
+            <button type="submit" class="btn btn-success">Enregistrer le Relevé</button>
+            <a href="{{ url_for('saison_detail', nom=saison.nom) }}" class="btn btn-secondary">Annuler</a>
+        </div>
+    </form>
+</div>
+
+{% if saison.releves %}
+<div class="card" style="margin-top: 30px; background-color: #f8f9fa;">
+    <h3>Dernier relevé enregistré</h3>
+    {% set dernier = saison.releves[-1] %}
+    <p><strong>Date:</strong> {{ dernier.date_releve.strftime('%d/%m/%Y') }}</p>
+    <p><strong>Index Gaz:</strong> {{ "%.2f"|format(dernier.index_gaz) }} m³</p>
+    <p><strong>Index Calories:</strong> {{ "%.2f"|format(dernier.index_calories) }}</p>
+    <p><strong>DJU:</strong> {{ "%.1f"|format(dernier.dju) }}</p>
+</div>
+{% endif %}
+
+<div class="card" style="margin-top: 30px; background-color: #e7f3ff;">
+    <h3>Information sur les DJU</h3>
+    <p>Les Degrés Jours Unifiés (DJU) mesurent la rigueur de l'hiver et permettent de comparer les consommations sur différentes périodes.</p>
+    <p><strong>Calcul automatique :</strong> Cliquez sur "Calculer automatiquement" pour récupérer les DJU via l'API Open-Meteo (gratuit, sans clé API).</p>
+    <p>Vous pouvez aussi saisir manuellement les DJU depuis Météo France ou des sites spécialisés en performance énergétique.</p>
+    <p>Pour le premier relevé de la saison (relevé de référence), indiquez 0 DJU car il n'y a pas de période de comparaison.</p>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const btnCalculDju = document.getElementById('btn-calcul-dju');
+    const inputDju = document.getElementById('dju');
+    const inputDateReleve = document.getElementById('date_releve');
+    const djuStatus = document.getElementById('dju-status');
+
+    {% if saison.releves %}
+    const dateDernierReleve = '{{ saison.releves[-1].date_releve.isoformat() }}';
+    {% endif %}
+
+    if (btnCalculDju) {
+        btnCalculDju.addEventListener('click', async function() {
+            // Vérifier que la date du relevé est renseignée
+            if (!inputDateReleve.value) {
+                showStatus('error', '⚠️ Veuillez d\'abord saisir la date du relevé');
+                return;
+            }
+
+            const dateReleve = inputDateReleve.value;
+
+            // Vérifier que la date est postérieure au dernier relevé
+            if (dateReleve <= dateDernierReleve) {
+                showStatus('error', '⚠️ La date du relevé doit être postérieure au dernier relevé (' + formatDate(dateDernierReleve) + ')');
+                return;
+            }
+
+            // Désactiver le bouton pendant le calcul
+            btnCalculDju.disabled = true;
+            btnCalculDju.textContent = '⏳ Calcul en cours...';
+            showStatus('info', '🔄 Récupération des données météo...');
+
+            try {
+                const response = await fetch('/api/dju/calculate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        date_debut: dateDernierReleve,
+                        date_fin: dateReleve,
+                        base_temp: 18.0
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    inputDju.value = data.dju;
+                    const sourceInfo = data.cached ? '(depuis le cache)' : `(depuis ${data.source})`;
+                    showStatus('success', `✅ DJU calculé : ${data.dju} ${sourceInfo}`);
+                } else {
+                    showStatus('error', `❌ Erreur : ${data.error}`);
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                showStatus('error', '❌ Erreur de connexion. Vérifiez votre connexion internet.');
+            } finally {
+                // Réactiver le bouton
+                btnCalculDju.disabled = false;
+                btnCalculDju.textContent = '🔄 Calculer automatiquement';
+            }
+        });
+    }
+
+    function showStatus(type, message) {
+        djuStatus.style.display = 'block';
+        djuStatus.textContent = message;
+
+        if (type === 'success') {
+            djuStatus.style.backgroundColor = '#d4edda';
+            djuStatus.style.color = '#155724';
+            djuStatus.style.border = '1px solid #c3e6cb';
+        } else if (type === 'error') {
+            djuStatus.style.backgroundColor = '#f8d7da';
+            djuStatus.style.color = '#721c24';
+            djuStatus.style.border = '1px solid #f5c6cb';
+        } else {
+            djuStatus.style.backgroundColor = '#d1ecf1';
+            djuStatus.style.color = '#0c5460';
+            djuStatus.style.border = '1px solid #bee5eb';
+        }
+
+        // Masquer après 10 secondes si succès
+        if (type === 'success') {
+            setTimeout(() => {
+                djuStatus.style.display = 'none';
+            }, 10000);
+        }
+    }
+
+    function formatDate(isoDate) {
+        const date = new Date(isoDate);
+        return date.toLocaleDateString('fr-FR');
+    }
+});
+</script>
+{% endblock %}

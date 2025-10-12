@@ -1,0 +1,20 @@
+# Application de suivi de consommation de chaudière
+# Python >= 3.9
+
+# Framework web
+Flask==3.0.0
+
+# Manipulation de données
+PyYAML==6.0.1
+
+# Génération de graphiques
+plotly==5.18.0
+
+# Requêtes HTTP pour API météo
+requests==2.31.0
+
+# Gestion des variables d'environnement
+python-dotenv==1.0.0
+
+# Optionnel: serveur WSGI pour production
+gunicorn==21.2.0

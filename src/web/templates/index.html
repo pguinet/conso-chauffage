@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}Accueil - Suivi Chaudière{% endblock %}
+
+{% block content %}
+<h1>Saisons de Chauffe</h1>
+
+{% if saisons %}
+    <div class="stats">
+        <div class="stat-card">
+            <div class="stat-label">Nombre de saisons</div>
+            <div class="stat-value">{{ saisons|length }}</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Saisons en cours</div>
+            <div class="stat-value">{{ saisons|selectattr('date_fin', 'none')|list|length }}</div>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Saison</th>
+                <th>Date Début</th>
+                <th>Date Fin</th>
+                <th>Statut</th>
+                <th>Relevés</th>
+                <th>Rendement Moyen</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for saison in saisons %}
+            <tr>
+                <td><strong>{{ saison.nom }}</strong></td>
+                <td>{{ saison.date_debut.strftime('%d/%m/%Y') }}</td>
+                <td>
+                    {% if saison.date_fin %}
+                        {{ saison.date_fin.strftime('%d/%m/%Y') }}
+                    {% else %}
+                        <span style="color: #28a745;">En cours</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if saison.est_en_cours() %}
+                        <span style="color: #28a745; font-weight: bold;">Active</span>
+                    {% else %}
+                        <span style="color: #6c757d;">Terminée</span>
+                    {% endif %}
+                </td>
+                <td>{{ saison.releves|length }}</td>
+                <td>
+                    {% if saison.get_rendement_moyen() %}
+                        {{ "%.2f"|format(saison.get_rendement_moyen()) }}%
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ url_for('saison_detail', nom=saison.nom) }}" class="btn btn-small">Voir</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div style="margin-top: 30px;">
+        <a href="{{ url_for('nouvelle_saison') }}" class="btn btn-success">Nouvelle Saison</a>
+        <a href="{{ url_for('rapport_comparaison_html') }}" class="btn btn-secondary">Rapport Comparaison</a>
+        <a href="{{ url_for('graphique_comparaison') }}" class="btn btn-secondary">Graphique Comparaison</a>
+        <a href="{{ url_for('graphique_rendements_compares') }}" class="btn btn-secondary">Rendements Comparés</a>
+    </div>
+{% else %}
+    <div class="card">
+        <p>Aucune saison de chauffe enregistrée.</p>
+        <p style="margin-top: 15px;">
+            <a href="{{ url_for('nouvelle_saison') }}" class="btn btn-success">Créer une Nouvelle Saison</a>
+            <a href="{{ url_for('init_exemple') }}" class="btn btn-secondary">Créer des Données d'Exemple</a>
+        </p>
+    </div>
+{% endif %}
+{% endblock %}
