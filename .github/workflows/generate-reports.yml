@@ -13,6 +13,8 @@ on:
 jobs:
   generate-reports:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Nécessaire pour pousser vers gh-pages
 
     steps:
       - name: Checkout repository
