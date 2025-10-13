@@ -191,21 +191,32 @@ saisons:
 
 ### Utilisation
 
+**Installation et configuration de l'environnement virtuel Python** :
+```bash
+# Créer le venv (une seule fois)
+python3 -m venv venv
+
+# Activer le venv (à faire à chaque session)
+source venv/bin/activate
+
+# Installer les dépendances
+pip install -r requirements.txt
+```
+
+**IMPORTANT pour Claude** : Toujours activer le venv Python avec `source venv/bin/activate` avant d'exécuter des commandes Python (scripts, Flask, etc.).
+
 **Démarrage de l'interface web** :
 ```bash
+source venv/bin/activate
 python src/web/app.py
 # Accès : http://localhost:5000
 ```
 
 **Génération des rapports en CLI** :
 ```bash
+source venv/bin/activate
 python scripts/generate_all_reports.py
 # Sortie : output/
-```
-
-**Installation** :
-```bash
-pip install -r requirements.txt
 ```
 
 ## Récupération Automatique des DJU (✅ Implémenté)

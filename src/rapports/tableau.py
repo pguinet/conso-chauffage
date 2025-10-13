@@ -59,6 +59,19 @@ def generer_rapport_saison_html(saison: Saison, output_path: Path) -> None:
     """
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
+    # Calcul des statistiques avec gestion des valeurs None
+    conso_totale = saison.get_conso_totale_gaz()
+    conso_totale_str = f"{conso_totale:.2f}" if conso_totale is not None else "-"
+
+    calories_totales = saison.get_calories_totales()
+    calories_totales_str = f"{calories_totales:.2f}" if calories_totales is not None else "-"
+
+    dju_total = saison.get_dju_total()
+    dju_total_str = f"{dju_total:.1f}" if dju_total is not None else "-"
+
+    rendement_moyen = saison.get_rendement_moyen()
+    rendement_moyen_str = f"{rendement_moyen:.2f}" if rendement_moyen is not None else "-"
+
     html = f"""<!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -155,19 +168,19 @@ def generer_rapport_saison_html(saison: Saison, output_path: Path) -> None:
         <div class="stats">
             <div class="stat-card">
                 <div class="stat-label">Consommation Totale Gaz</div>
-                <div class="stat-value">{saison.get_conso_totale_gaz():.2f} m³</div>
+                <div class="stat-value">{conso_totale_str} m³</div>
             </div>
             <div class="stat-card">
                 <div class="stat-label">Calories Totales Produites</div>
-                <div class="stat-value">{saison.get_calories_totales():.2f}</div>
+                <div class="stat-value">{calories_totales_str}</div>
             </div>
             <div class="stat-card">
                 <div class="stat-label">DJU Total</div>
-                <div class="stat-value">{saison.get_dju_total():.1f}</div>
+                <div class="stat-value">{dju_total_str}</div>
             </div>
             <div class="stat-card">
                 <div class="stat-label">Rendement Moyen</div>
-                <div class="stat-value">{saison.get_rendement_moyen():.2f}%</div>
+                <div class="stat-value">{rendement_moyen_str}%</div>
             </div>
         </div>
 
@@ -190,16 +203,27 @@ def generer_rapport_saison_html(saison: Saison, output_path: Path) -> None:
 """
 
     for releve in saison.releves:
+        # Gestion des valeurs None pour tous les champs
+        date_str = releve.date_releve.strftime('%d/%m/%Y') if releve.date_releve else '-'
+        index_gaz_str = f"{releve.index_gaz:.2f}" if releve.index_gaz is not None else '-'
+        index_calories_str = f"{releve.index_calories:.2f}" if releve.index_calories is not None else '-'
+        dju_str = f"{releve.dju:.1f}" if releve.dju is not None else '-'
+        conso_gaz_str = f"{releve.conso_gaz:.2f}" if releve.conso_gaz is not None else '-'
+        conso_par_dju_str = f"{releve.conso_gaz_par_dju:.4f}" if releve.conso_gaz_par_dju is not None else '-'
+        cal_prod_str = f"{releve.calories_produites:.2f}" if releve.calories_produites is not None else '-'
+        cal_par_dju_str = f"{releve.calories_par_dju:.4f}" if releve.calories_par_dju is not None else '-'
+        rendement_str = f"{releve.rendement:.2f}" if releve.rendement is not None else '-'
+
         html += f"""                <tr>
-                    <td>{releve.date_releve.strftime('%d/%m/%Y')}</td>
-                    <td class="number">{releve.index_gaz:.2f}</td>
-                    <td class="number">{releve.index_calories:.2f}</td>
-                    <td class="number">{releve.dju:.1f}</td>
-                    <td class="number">{releve.conso_gaz:.2f if releve.conso_gaz is not None else '-'}</td>
-                    <td class="number">{releve.conso_gaz_par_dju:.4f if releve.conso_gaz_par_dju is not None else '-'}</td>
-                    <td class="number">{releve.calories_produites:.2f if releve.calories_produites is not None else '-'}</td>
-                    <td class="number">{releve.calories_par_dju:.4f if releve.calories_par_dju is not None else '-'}</td>
-                    <td class="number">{releve.rendement:.2f if releve.rendement is not None else '-'}</td>
+                    <td>{date_str}</td>
+                    <td class="number">{index_gaz_str}</td>
+                    <td class="number">{index_calories_str}</td>
+                    <td class="number">{dju_str}</td>
+                    <td class="number">{conso_gaz_str}</td>
+                    <td class="number">{conso_par_dju_str}</td>
+                    <td class="number">{cal_prod_str}</td>
+                    <td class="number">{cal_par_dju_str}</td>
+                    <td class="number">{rendement_str}</td>
                 </tr>
 """
 

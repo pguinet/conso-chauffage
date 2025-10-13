@@ -6,7 +6,12 @@
       "Bash(python:*)",
       "Bash(python3:*)",
       "Bash(find:*)",
-      "WebFetch(domain:www.infoclimat.fr)"
+      "WebFetch(domain:www.infoclimat.fr)",
+      "Bash(gh run list:*)",
+      "Bash(source:*)",
+      "Bash(pip install:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nFix: Correction du workflow GitHub Actions et gestion robuste des valeurs None\n\n- Fix workflow: correction de la référence de branche (main -> master) pour le déploiement GitHub Pages\n- Fix génération rapports: ajout de vérifications pour toutes les valeurs None dans les statistiques et relevés\n- Résolution du TypeError lors de la génération des rapports HTML\n- Documentation: ajout des instructions pour l''utilisation du venv Python\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")"
     ],
     "deny": [],
     "ask": []
