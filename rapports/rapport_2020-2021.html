@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rapport Saison 2020-2021</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #007bff;
+            padding-bottom: 10px;
+        }
+        .info {
+            background-color: #e7f3ff;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: bold;
+        }
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        .number {
+            text-align: right;
+        }
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .stat-card {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #007bff;
+        }
+        .stat-label {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        .stat-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Rapport Saison 2020-2021</h1>
+
+        <div class="info">
+            <p><strong>Période:</strong> Du 25/09/2020
+            au 07/06/2021</p>
+            <p><strong>Nombre de relevés:</strong> 8</p>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-label">Consommation Totale Gaz</div>
+                <div class="stat-value">53367.00 m³</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Calories Totales Produites</div>
+                <div class="stat-value">684.00</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">DJU Total</div>
+                <div class="stat-value">2463.3</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Rendement Moyen</div>
+                <div class="stat-value">129.05%</div>
+            </div>
+        </div>
+
+        <h2>Relevés Détaillés</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th class="number">Index Gaz (m³)</th>
+                    <th class="number">Index Calories</th>
+                    <th class="number">DJU</th>
+                    <th class="number">Conso Gaz (m³)</th>
+                    <th class="number">Conso/DJU</th>
+                    <th class="number">Calories Prod.</th>
+                    <th class="number">Cal./DJU</th>
+                    <th class="number">Rendement (%)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>25/09/2020</td>
+                    <td class="number">408802.00</td>
+                    <td class="number">4379.00</td>
+                    <td class="number">0.0</td>
+                    <td class="number">-</td>
+                    <td class="number">-</td>
+                    <td class="number">-</td>
+                    <td class="number">-</td>
+                    <td class="number">-</td>
+                </tr>
+                <tr>
+                    <td>02/11/2020</td>
+                    <td class="number">413601.00</td>
+                    <td class="number">4446.00</td>
+                    <td class="number">217.1</td>
+                    <td class="number">4799.00</td>
+                    <td class="number">22.1050</td>
+                    <td class="number">67.00</td>
+                    <td class="number">0.3086</td>
+                    <td class="number">139.61</td>
+                </tr>
+                <tr>
+                    <td>27/11/2020</td>
+                    <td class="number">419200.00</td>
+                    <td class="number">4519.00</td>
+                    <td class="number">219.2</td>
+                    <td class="number">5599.00</td>
+                    <td class="number">25.5429</td>
+                    <td class="number">73.00</td>
+                    <td class="number">0.3330</td>
+                    <td class="number">130.38</td>
+                </tr>
+                <tr>
+                    <td>29/12/2020</td>
+                    <td class="number">429459.00</td>
+                    <td class="number">4618.00</td>
+                    <td class="number">391.6</td>
+                    <td class="number">10259.00</td>
+                    <td class="number">26.1977</td>
+                    <td class="number">99.00</td>
+                    <td class="number">0.2528</td>
+                    <td class="number">96.50</td>
+                </tr>
+                <tr>
+                    <td>24/02/2021</td>
+                    <td class="number">444586.00</td>
+                    <td class="number">4831.00</td>
+                    <td class="number">768.6</td>
+                    <td class="number">15127.00</td>
+                    <td class="number">19.6812</td>
+                    <td class="number">213.00</td>
+                    <td class="number">0.2771</td>
+                    <td class="number">140.81</td>
+                </tr>
+                <tr>
+                    <td>26/03/2021</td>
+                    <td class="number">451659.00</td>
+                    <td class="number">4924.00</td>
+                    <td class="number">345.9</td>
+                    <td class="number">7073.00</td>
+                    <td class="number">20.4481</td>
+                    <td class="number">93.00</td>
+                    <td class="number">0.2689</td>
+                    <td class="number">131.49</td>
+                </tr>
+                <tr>
+                    <td>28/04/2021</td>
+                    <td class="number">457867.00</td>
+                    <td class="number">5006.00</td>
+                    <td class="number">313.8</td>
+                    <td class="number">6208.00</td>
+                    <td class="number">19.7833</td>
+                    <td class="number">82.00</td>
+                    <td class="number">0.2613</td>
+                    <td class="number">132.09</td>
+                </tr>
+                <tr>
+                    <td>07/06/2021</td>
+                    <td class="number">462169.00</td>
+                    <td class="number">5063.00</td>
+                    <td class="number">207.1</td>
+                    <td class="number">4302.00</td>
+                    <td class="number">20.7726</td>
+                    <td class="number">57.00</td>
+                    <td class="number">0.2752</td>
+                    <td class="number">132.50</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="footer">
+            <p>Rapport généré le 13/10/2025 à 07:46</p>
+        </div>
+    </div>
+</body>
+</html>
