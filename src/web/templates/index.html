@@ -23,6 +23,7 @@
                 <th>Saison</th>
                 <th>Date Début</th>
                 <th>Date Fin</th>
+                <th>Durée (jours)</th>
                 <th>Statut</th>
                 <th>Relevés</th>
                 <th>Rendement Moyen</th>
@@ -39,6 +40,13 @@
                         {{ saison.date_fin.strftime('%d/%m/%Y') }}
                     {% else %}
                         <span style="color: #28a745;">En cours</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if saison.get_duree_jours() %}
+                        {{ saison.get_duree_jours() }}
+                    {% else %}
+                        <span style="color: #28a745;">-</span>
                     {% endif %}
                 </td>
                 <td>

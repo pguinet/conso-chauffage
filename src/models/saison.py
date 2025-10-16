@@ -99,6 +99,17 @@ class Saison:
         """Vérifie si la saison est en cours."""
         return self.date_fin is None
 
+    def get_duree_jours(self) -> Optional[int]:
+        """
+        Calcule la durée de la saison en jours.
+
+        Returns:
+            Le nombre de jours de la saison, ou None si la saison est en cours
+        """
+        if self.date_fin is None:
+            return None
+        return (self.date_fin - self.date_debut).days
+
     def to_dict(self) -> dict:
         """Convertit la saison en dictionnaire."""
         return {
