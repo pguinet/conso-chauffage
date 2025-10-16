@@ -267,7 +267,6 @@ def generer_rapport_comparaison_csv(saisons: List[Saison], output_path: Path) ->
             'Date Début',
             'Date Fin',
             'Durée (jours)',
-            'Statut',
             'Nb Relevés',
             'Conso Totale Gaz (m³)',
             'Calories Totales',
@@ -285,7 +284,6 @@ def generer_rapport_comparaison_csv(saisons: List[Saison], output_path: Path) ->
                 stats['date_debut'].strftime('%Y-%m-%d'),
                 stats['date_fin'].strftime('%Y-%m-%d') if stats['date_fin'] else 'En cours',
                 stats['duree_jours'] if stats['duree_jours'] is not None else '',
-                'En cours' if stats['en_cours'] else 'Terminée',
                 stats['nombre_releves'],
                 f"{stats['conso_totale_gaz']:.2f}",
                 f"{stats['calories_totales']:.2f}",
@@ -381,7 +379,6 @@ def generer_rapport_comparaison_html(saisons: List[Saison], output_path: Path) -
                     <th>Saison</th>
                     <th>Période</th>
                     <th class="number">Durée (j)</th>
-                    <th>Statut</th>
                     <th class="number">Relevés</th>
                     <th class="number">Conso Gaz (m³)</th>
                     <th class="number">DJU Total</th>
@@ -394,8 +391,6 @@ def generer_rapport_comparaison_html(saisons: List[Saison], output_path: Path) -
 """
 
     for nom_saison, stats in comparaison.items():
-        statut_class = 'en-cours' if stats['en_cours'] else 'terminee'
-        statut_text = 'En cours' if stats['en_cours'] else 'Terminée'
         periode = f"{stats['date_debut'].strftime('%d/%m/%Y')} - "
         periode += stats['date_fin'].strftime('%d/%m/%Y') if stats['date_fin'] else 'En cours'
 
@@ -407,7 +402,6 @@ def generer_rapport_comparaison_html(saisons: List[Saison], output_path: Path) -
                     <td><strong>{stats['nom']}</strong></td>
                     <td>{periode}</td>
                     <td class="number">{duree_str}</td>
-                    <td class="{statut_class}">{statut_text}</td>
                     <td class="number">{stats['nombre_releves']}</td>
                     <td class="number">{stats['conso_totale_gaz']:.2f}</td>
                     <td class="number">{stats['dju_total']:.1f}</td>
