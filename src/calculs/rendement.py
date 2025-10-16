@@ -79,6 +79,7 @@ def comparer_saisons(saisons: List[Saison]) -> Dict[str, Dict]:
             'nom': saison.nom,
             'date_debut': saison.date_debut,
             'date_fin': saison.date_fin,
+            'duree_jours': saison.get_duree_jours(),
             'en_cours': saison.est_en_cours(),
             'nombre_releves': len(saison.releves),
             'conso_totale_gaz': saison.get_conso_totale_gaz(),

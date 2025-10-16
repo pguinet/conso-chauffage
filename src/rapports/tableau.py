@@ -72,6 +72,9 @@ def generer_rapport_saison_html(saison: Saison, output_path: Path) -> None:
     rendement_moyen = saison.get_rendement_moyen()
     rendement_moyen_str = f"{rendement_moyen:.2f}" if rendement_moyen is not None else "-"
 
+    duree_jours = saison.get_duree_jours()
+    duree_str = f"{duree_jours} jours" if duree_jours is not None else "En cours"
+
     html = f"""<!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -162,6 +165,7 @@ def generer_rapport_saison_html(saison: Saison, output_path: Path) -> None:
         <div class="info">
             <p><strong>Période:</strong> Du {saison.date_debut.strftime('%d/%m/%Y')}
             {'au ' + saison.date_fin.strftime('%d/%m/%Y') if saison.date_fin else '(en cours)'}</p>
+            <p><strong>Durée:</strong> {duree_str}</p>
             <p><strong>Nombre de relevés:</strong> {len(saison.releves)}</p>
         </div>
 
@@ -262,6 +266,7 @@ def generer_rapport_comparaison_csv(saisons: List[Saison], output_path: Path) ->
             'Saison',
             'Date Début',
             'Date Fin',
+            'Durée (jours)',
             'Statut',
             'Nb Relevés',
             'Conso Totale Gaz (m³)',
@@ -279,6 +284,7 @@ def generer_rapport_comparaison_csv(saisons: List[Saison], output_path: Path) ->
                 stats['nom'],
                 stats['date_debut'].strftime('%Y-%m-%d'),
                 stats['date_fin'].strftime('%Y-%m-%d') if stats['date_fin'] else 'En cours',
+                stats['duree_jours'] if stats['duree_jours'] is not None else '',
                 'En cours' if stats['en_cours'] else 'Terminée',
                 stats['nombre_releves'],
                 f"{stats['conso_totale_gaz']:.2f}",
@@ -374,6 +380,7 @@ def generer_rapport_comparaison_html(saisons: List[Saison], output_path: Path) -
                 <tr>
                     <th>Saison</th>
                     <th>Période</th>
+                    <th class="number">Durée (j)</th>
                     <th>Statut</th>
                     <th class="number">Relevés</th>
                     <th class="number">Conso Gaz (m³)</th>
@@ -392,12 +399,14 @@ def generer_rapport_comparaison_html(saisons: List[Saison], output_path: Path) -
         periode = f"{stats['date_debut'].strftime('%d/%m/%Y')} - "
         periode += stats['date_fin'].strftime('%d/%m/%Y') if stats['date_fin'] else 'En cours'
 
+        duree_str = str(stats['duree_jours']) if stats['duree_jours'] is not None else '-'
         rendement_moyen_str = f"{stats['rendement_moyen']:.2f}%" if stats['rendement_moyen'] is not None else '-'
         rendement_global_str = f"{stats['rendement_global']:.2f}%" if stats['rendement_global'] is not None else '-'
 
         html += f"""                <tr>
                     <td><strong>{stats['nom']}</strong></td>
                     <td>{periode}</td>
+                    <td class="number">{duree_str}</td>
                     <td class="{statut_class}">{statut_text}</td>
                     <td class="number">{stats['nombre_releves']}</td>
                     <td class="number">{stats['conso_totale_gaz']:.2f}</td>
