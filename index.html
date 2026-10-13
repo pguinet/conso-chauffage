@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil – Suivi chaudière</title>
+    <style>
+    * { box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; margin: 0; background-color: #f5f5f5; color: #333; }
+    a { color: #0056b3; }
+    .nav { background-color: #007bff; display: flex; flex-wrap: wrap; align-items: center;
+           gap: 4px 20px; padding: 10px 20px; position: sticky; top: 0; z-index: 10; }
+    .nav a, .nav summary { color: white; text-decoration: none; font-weight: bold; cursor: pointer; }
+    .nav a:hover, .nav summary:hover { text-decoration: underline; }
+    .nav a[aria-current="page"] { border-bottom: 2px solid white; }
+    .nav .marque { font-size: 1.15em; margin-right: 10px; }
+    .menu { position: relative; }
+    .menu summary { list-style: none; }
+    .menu summary::-webkit-details-marker { display: none; }
+    .menu ul { position: absolute; left: 0; top: 100%; margin: 8px 0 0; padding: 6px 0;
+               list-style: none; background: white; border-radius: 6px; min-width: 140px;
+               box-shadow: 0 4px 12px rgba(0,0,0,0.2); max-height: 70vh; overflow-y: auto; }
+    .menu ul a { color: #333; display: block; padding: 6px 16px; font-weight: normal; }
+    .menu ul a[aria-current="page"] { font-weight: bold; border-bottom: none; background: #e7f3ff; }
+    .container { max-width: 1200px; margin: 20px auto; background-color: white; padding: 20px;
+                 border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    h1 { border-bottom: 3px solid #007bff; padding-bottom: 10px; margin-top: 0; }
+    h2 { margin-top: 35px; }
+    .info { background-color: #e7f3ff; padding: 10px 15px; border-radius: 5px; margin: 20px 0; }
+    .pager { display: flex; justify-content: space-between; gap: 10px; margin: 10px 0 20px; }
+    .pager a { text-decoration: none; font-weight: bold; }
+    .table-scroll { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+    th { background-color: #007bff; color: white; padding: 12px; text-align: left; }
+    td { padding: 10px; border-bottom: 1px solid #ddd; }
+    tr:hover { background-color: #f5f5f5; }
+    .number { text-align: right; }
+    .stats, .cartes { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                      gap: 15px; margin: 20px 0; }
+    .stat-card, .carte { background-color: #f8f9fa; padding: 15px; border-radius: 5px;
+                         border-left: 4px solid #007bff; }
+    .stat-label { font-size: 0.9em; color: #666; margin-bottom: 5px; }
+    .stat-value { font-size: 1.5em; font-weight: bold; }
+    .carte { display: block; text-decoration: none; color: inherit; }
+    .carte:hover { background-color: #e7f3ff; }
+    .carte strong { font-size: 1.2em; color: #0056b3; }
+    .carte span { display: block; color: #666; margin-top: 5px; }
+    .carte.en-cours { border-left-color: #28a745; }
+    .vide { color: #666; font-style: italic; }
+    .bouton { display: inline-block; padding: 8px 14px; background: #6c757d; color: white;
+              border-radius: 4px; text-decoration: none; }
+    .footer { text-align: center; color: #666; font-size: 0.9em; margin: 20px; }
+    </style>
+</head>
+<body>
+<nav class="nav">
+    <a class="marque" href="index.html">Suivi chaudière</a>
+    <a href="index.html" aria-current="page">Accueil</a>
+    <a href="comparaison.html">Comparaison</a>
+    <details class="menu"><summary>Saisons ▾</summary><ul><li><a href="saison_2026-2027.html">2026-2027</a></li><li><a href="saison_2025-2026.html">2025-2026</a></li><li><a href="saison_2024-2025.html">2024-2025</a></li><li><a href="saison_2023-2024.html">2023-2024</a></li><li><a href="saison_2022-2023.html">2022-2023</a></li><li><a href="saison_2021-2022.html">2021-2022</a></li><li><a href="saison_2020-2021.html">2020-2021</a></li><li><a href="saison_2019-2020.html">2019-2020</a></li><li><a href="saison_2018-2019.html">2018-2019</a></li><li><a href="saison_2017-2018.html">2017-2018</a></li><li><a href="saison_2016-2017.html">2016-2017</a></li><li><a href="saison_2015-2016.html">2015-2016</a></li><li><a href="saison_2014-2015.html">2014-2015</a></li><li><a href="saison_2013-2014.html">2013-2014</a></li><li><a href="saison_2012-2013.html">2012-2013</a></li></ul></details>
+</nav>
+<main class="container">
+<h1>Suivi de consommation de la chaudière</h1>
+<p>15 saison(s) de chauffe. <a href="comparaison.html">Comparer les saisons →</a></p>
+<div class="cartes">
+    <a class="carte en-cours" href="saison_2026-2027.html">
+        <strong>2026-2027</strong>
+        <span>Depuis le 15/10/2026 (en cours)</span>
+        <span>Pas encore d'indicateurs</span>
+    </a>
+    <a class="carte" href="saison_2025-2026.html">
+        <strong>2025-2026</strong>
+        <span>Du 29/09/2025 au 27/05/2026</span>
+        <span>Rendement moyen 116.1 %</span>
+    </a>
+    <a class="carte" href="saison_2024-2025.html">
+        <strong>2024-2025</strong>
+        <span>Du 16/09/2024 au 01/06/2025</span>
+        <span>Rendement moyen 124.0 %</span>
+    </a>
+    <a class="carte" href="saison_2023-2024.html">
+        <strong>2023-2024</strong>
+        <span>Du 16/10/2023 au 21/05/2024</span>
+        <span>Rendement moyen 130.4 %</span>
+    </a>
+    <a class="carte" href="saison_2022-2023.html">
+        <strong>2022-2023</strong>
+        <span>Du 27/09/2022 au 02/06/2023</span>
+        <span>Rendement moyen 133.5 %</span>
+    </a>
+    <a class="carte" href="saison_2021-2022.html">
+        <strong>2021-2022</strong>
+        <span>Du 28/09/2021 au 11/05/2022</span>
+        <span>Rendement moyen 126.3 %</span>
+    </a>
+    <a class="carte" href="saison_2020-2021.html">
+        <strong>2020-2021</strong>
+        <span>Du 25/09/2020 au 07/06/2021</span>
+        <span>Rendement moyen 128.2 %</span>
+    </a>
+    <a class="carte" href="saison_2019-2020.html">
+        <strong>2019-2020</strong>
+        <span>Du 30/09/2019 au 02/05/2020</span>
+        <span>Rendement moyen 123.0 %</span>
+    </a>
+    <a class="carte" href="saison_2018-2019.html">
+        <strong>2018-2019</strong>
+        <span>Du 27/09/2018 au 17/06/2019</span>
+        <span>Rendement moyen 126.5 %</span>
+    </a>
+    <a class="carte" href="saison_2017-2018.html">
+        <strong>2017-2018</strong>
+        <span>Du 19/09/2017 au 19/06/2018</span>
+        <span>Rendement moyen 124.5 %</span>
+    </a>
+    <a class="carte" href="saison_2016-2017.html">
+        <strong>2016-2017</strong>
+        <span>Du 03/10/2016 au 07/06/2017</span>
+        <span>Rendement moyen 126.5 %</span>
+    </a>
+    <a class="carte" href="saison_2015-2016.html">
+        <strong>2015-2016</strong>
+        <span>Du 29/09/2015 au 09/06/2016</span>
+        <span>Rendement moyen 130.0 %</span>
+    </a>
+    <a class="carte" href="saison_2014-2015.html">
+        <strong>2014-2015</strong>
+        <span>Du 09/10/2014 au 20/05/2015</span>
+        <span>Rendement moyen 127.7 %</span>
+    </a>
+    <a class="carte" href="saison_2013-2014.html">
+        <strong>2013-2014</strong>
+        <span>Du 11/10/2013 au 20/05/2014</span>
+        <span>Rendement moyen 125.0 %</span>
+    </a>
+    <a class="carte" href="saison_2012-2013.html">
+        <strong>2012-2013</strong>
+        <span>Du 15/10/2012 au 06/05/2013</span>
+        <span>Rendement non mesurable</span>
+    </a>
+</div>
+
+</main>
+<div class="footer">Rapports générés le 13/10/2026 à 20:33</div>
+</body>
+</html>

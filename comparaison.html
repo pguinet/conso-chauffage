@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparaison – Suivi chaudière</title>
+    <script src="plotly.min.js"></script>
+    <style>
+    * { box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; margin: 0; background-color: #f5f5f5; color: #333; }
+    a { color: #0056b3; }
+    .nav { background-color: #007bff; display: flex; flex-wrap: wrap; align-items: center;
+           gap: 4px 20px; padding: 10px 20px; position: sticky; top: 0; z-index: 10; }
+    .nav a, .nav summary { color: white; text-decoration: none; font-weight: bold; cursor: pointer; }
+    .nav a:hover, .nav summary:hover { text-decoration: underline; }
+    .nav a[aria-current="page"] { border-bottom: 2px solid white; }
+    .nav .marque { font-size: 1.15em; margin-right: 10px; }
+    .menu { position: relative; }
+    .menu summary { list-style: none; }
+    .menu summary::-webkit-details-marker { display: none; }
+    .menu ul { position: absolute; left: 0; top: 100%; margin: 8px 0 0; padding: 6px 0;
+               list-style: none; background: white; border-radius: 6px; min-width: 140px;
+               box-shadow: 0 4px 12px rgba(0,0,0,0.2); max-height: 70vh; overflow-y: auto; }
+    .menu ul a { color: #333; display: block; padding: 6px 16px; font-weight: normal; }
+    .menu ul a[aria-current="page"] { font-weight: bold; border-bottom: none; background: #e7f3ff; }
+    .container { max-width: 1200px; margin: 20px auto; background-color: white; padding: 20px;
+                 border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    h1 { border-bottom: 3px solid #007bff; padding-bottom: 10px; margin-top: 0; }
+    h2 { margin-top: 35px; }
+    .info { background-color: #e7f3ff; padding: 10px 15px; border-radius: 5px; margin: 20px 0; }
+    .pager { display: flex; justify-content: space-between; gap: 10px; margin: 10px 0 20px; }
+    .pager a { text-decoration: none; font-weight: bold; }
+    .table-scroll { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+    th { background-color: #007bff; color: white; padding: 12px; text-align: left; }
+    td { padding: 10px; border-bottom: 1px solid #ddd; }
+    tr:hover { background-color: #f5f5f5; }
+    .number { text-align: right; }
+    .stats, .cartes { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                      gap: 15px; margin: 20px 0; }
+    .stat-card, .carte { background-color: #f8f9fa; padding: 15px; border-radius: 5px;
+                         border-left: 4px solid #007bff; }
+    .stat-label { font-size: 0.9em; color: #666; margin-bottom: 5px; }
+    .stat-value { font-size: 1.5em; font-weight: bold; }
+    .carte { display: block; text-decoration: none; color: inherit; }
+    .carte:hover { background-color: #e7f3ff; }
+    .carte strong { font-size: 1.2em; color: #0056b3; }
+    .carte span { display: block; color: #666; margin-top: 5px; }
+    .carte.en-cours { border-left-color: #28a745; }
+    .vide { color: #666; font-style: italic; }
+    .bouton { display: inline-block; padding: 8px 14px; background: #6c757d; color: white;
+              border-radius: 4px; text-decoration: none; }
+    .footer { text-align: center; color: #666; font-size: 0.9em; margin: 20px; }
+    </style>
+</head>
+<body>
+<nav class="nav">
+    <a class="marque" href="index.html">Suivi chaudière</a>
+    <a href="index.html">Accueil</a>
+    <a href="comparaison.html" aria-current="page">Comparaison</a>
+    <details class="menu"><summary>Saisons ▾</summary><ul><li><a href="saison_2026-2027.html">2026-2027</a></li><li><a href="saison_2025-2026.html">2025-2026</a></li><li><a href="saison_2024-2025.html">2024-2025</a></li><li><a href="saison_2023-2024.html">2023-2024</a></li><li><a href="saison_2022-2023.html">2022-2023</a></li><li><a href="saison_2021-2022.html">2021-2022</a></li><li><a href="saison_2020-2021.html">2020-2021</a></li><li><a href="saison_2019-2020.html">2019-2020</a></li><li><a href="saison_2018-2019.html">2018-2019</a></li><li><a href="saison_2017-2018.html">2017-2018</a></li><li><a href="saison_2016-2017.html">2016-2017</a></li><li><a href="saison_2015-2016.html">2015-2016</a></li><li><a href="saison_2014-2015.html">2014-2015</a></li><li><a href="saison_2013-2014.html">2013-2014</a></li><li><a href="saison_2012-2013.html">2012-2013</a></li></ul></details>
+</nav>
+<main class="container">
+<h1>Comparaison des saisons</h1>
+<p><a class="bouton" href="rapport_comparaison.csv" download>Télécharger le CSV</a></p>
+<div class="table-scroll">
+        <table>
+            <thead>
+                <tr>
+                    <th>Saison</th>
+                    <th>Période</th>
+                    <th class="number">Durée (j)</th>
+                    <th class="number">Relevés</th>
+                    <th class="number">Conso Gaz (m³)</th>
+                    <th class="number">DJU Total</th>
+                    <th class="number">Conso/DJU</th>
+                    <th class="number">Rendement Moyen</th>
+                    <th class="number">Rendement Global</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong><a href="saison_2012-2013.html">2012-2013</a></strong></td>
+                    <td>15/10/2012 - 06/05/2013</td>
+                    <td class="number">203</td>
+                    <td class="number">9</td>
+                    <td class="number">58248.00</td>
+                    <td class="number">2588.1</td>
+                    <td class="number">22.5061</td>
+                    <td class="number">-</td>
+                    <td class="number">-</td>
+                </tr>
+                <tr>
+                    <td><strong><a href="saison_2013-2014.html">2013-2014</a></strong></td>
+                    <td>11/10/2013 - 20/05/2014</td>
+                    <td class="number">221</td>
+                    <td class="number">8</td>
+                    <td class="number">43203.00</td>
+                    <td class="number">2089.9</td>
+                    <td class="number">20.6723</td>
+                    <td class="number">124.97%</td>
+                    <td class="number">124.97%</td>
+                </tr>
+                <tr>
+                    <td><strong><a href="saison_2014-2015.html">2014-2015</a></strong></td>
+                    <td>09/10/2014 - 20/05/2015</td>
+                    <td class="number">223</td>
+                    <td class="number">9</td>
+                    <td class="number">46523.00</td>
+                    <td class="number">2236.9</td>
+                    <td class="number">20.7980</td>
+                    <td class="number">127.68%</td>
+                    <td class="number">127.68%</td>
+                </tr>
+                <tr>
+                    <td><strong><a href="saison_2015-2016.html">2015-2016</a></strong></td>
+                    <td>29/09/2015 - 09/06/2016</td>
+                    <td class="number">254</td>
+                    <td class="number">10</td>
+                    <td class="number">47688.00</td>
+                    <td class="number">2236.3</td>
+                    <td class="number">21.3245</td>
+                    <td class="number">130.01%</td>
+                    <td class="number">130.01%</td>
+                </tr>
+                <tr>
+                    <td><strong><a href="saison_2016-2017.html">2016-2017</a></strong></td>
+                    <td>03/10/2016 - 07/06/2017</td>
+                    <td class="number">247</td>
+                    <td class="number">9</td>
+                    <td class="number">48152.00</td>
+                    <td class="number">2411.1</td>
+                    <td class="number">19.9710</td>
+                    <td class="number">126.47%</td>
+                    <td class="number">126.47%</td>
+                </tr>
+                <tr>
+                    <td><strong><a href="saison_2017-2018.html">2017-2018</a></strong></td>
+                    <td>19/09/2017 - 19/06/2018</td>
+                    <td class="number">273</td>
+                    <td class="number">10</td>
+                    <td class="number">55843.00</td>
+                    <td class="number">2330.9</td>
+                    <td class="number">23.9577</td>
+                    <td class="number">124.46%</td>
+                    <td class="number">124.46%</td>
+                </tr>
+                <tr>
+                    <td><strong><a href="saison_2018-2019.html">2018-2019</a></strong></td>
+                    <td>27/09/2018 - 17/06/2019</td>
+                    <td class="number">263</td>
+                    <td class="number">10</td>
+                    <td class="number">55239.00</td>
+                    <td class="number">2337.7</td>
+                    <td class="number">23.6296</td>
+                    <td class="number">126.54%</td>
+                    <td class="number">126.54%</td>
+                </tr>
+                <tr>
+                    <td><strong><a href="saison_2019-2020.html">2019-2020</a></strong></td>
+                    <td>30/09/2019 - 02/05/2020</td>
+                    <td class="number">215</td>
+                    <td class="number">9</td>
+                    <td class="number">53903.00</td>
+                    <td class="number">1964.7</td>
+                    <td class="number">27.4357</td>
+                    <td class="number">123.00%</td>
+                    <td class="number">123.00%</td>
+                </tr>
+                <tr>
+                    <td><strong><a href="saison_2020-2021.html">2020-2021</a></strong></td>
+                    <td>25/09/2020 - 07/06/2021</td>
+                    <td class="number">255</td>
+                    <td class="number">8</td>
+                    <td class="number">53367.00</td>
+                    <td class="number">2429.2</td>
+                    <td class="number">21.9690</td>
+                    <td class="number">128.17%</td>
+                    <td class="number">128.17%</td>
+                </tr>
+                <tr>
+                    <td><strong><a href="saison_2021-2022.html">2021-2022</a></strong></td>
+                    <td>28/09/2021 - 11/05/2022</td>
+                    <td class="number">225</td>
+                    <td class="number">9</td>
+                    <td class="number">51613.00</td>
+                    <td class="number">2224.7</td>
+                    <td class="number">23.2000</td>
+                    <td class="number">126.32%</td>
+                    <td class="number">126.32%</td>
+                </tr>
+                <tr>
+                    <td><strong><a href="saison_2022-2023.html">2022-2023</a></strong></td>
+                    <td>27/09/2022 - 02/06/2023</td>
+                    <td class="number">248</td>
+                    <td class="number">10</td>
+                    <td class="number">39848.00</td>
+                    <td class="number">2200.9</td>
+                    <td class="number">18.1053</td>
+                    <td class="number">133.51%</td>
+                    <td class="number">133.51%</td>
+                </tr>
+                <tr>
+                    <td><strong><a href="saison_2023-2024.html">2023-2024</a></strong></td>
+                    <td>16/10/2023 - 21/05/2024</td>
+                    <td class="number">218</td>
+                    <td class="number">7</td>
+                    <td class="number">40108.00</td>
+                    <td class="number">1987.8</td>
+                    <td class="number">20.1771</td>
+                    <td class="number">130.40%</td>
+                    <td class="number">130.40%</td>
+                </tr>
+                <tr>
+                    <td><strong><a href="saison_2024-2025.html">2024-2025</a></strong></td>
+                    <td>16/09/2024 - 01/06/2025</td>
+                    <td class="number">258</td>
+                    <td class="number">6</td>
+                    <td class="number">45875.00</td>
+                    <td class="number">2219.4</td>
+                    <td class="number">20.6700</td>
+                    <td class="number">124.03%</td>
+                    <td class="number">124.03%</td>
+                </tr>
+                <tr>
+                    <td><strong><a href="saison_2025-2026.html">2025-2026</a></strong></td>
+                    <td>29/09/2025 - 27/05/2026</td>
+                    <td class="number">240</td>
+                    <td class="number">10</td>
+                    <td class="number">43021.00</td>
+                    <td class="number">2004.8</td>
+                    <td class="number">21.4590</td>
+                    <td class="number">116.08%</td>
+                    <td class="number">116.08%</td>
+                </tr>
+                <tr>
+                    <td><strong><a href="saison_2026-2027.html">2026-2027</a></strong></td>
+                    <td>15/10/2026 - En cours</td>
+                    <td class="number">-</td>
+                    <td class="number">0</td>
+                    <td class="number">0.00</td>
+                    <td class="number">0.0</td>
+                    <td class="number">0.0000</td>
+                    <td class="number">-</td>
+                    <td class="number">-</td>
+                </tr>
+            </tbody>
+        </table>
+</div>
+<h2>Indicateurs par saison</h2>
+<div>                            <div id="6ab5363b-e6b2-49bb-86b8-71c7f755d2c1" class="plotly-graph-div" style="height:800px; width:100%;"></div>            <script type="text/javascript">                                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("6ab5363b-e6b2-49bb-86b8-71c7f755d2c1")) {                    Plotly.newPlot(                        "6ab5363b-e6b2-49bb-86b8-71c7f755d2c1",                        [{"marker":{"color":"#007bff"},"name":"Rendement Moyen","x":["2012-2013","2013-2014","2014-2015","2015-2016","2016-2017","2017-2018","2018-2019","2019-2020","2020-2021","2021-2022","2022-2023","2023-2024","2024-2025","2025-2026","2026-2027"],"y":[0,124.96900570295065,127.67878253766953,130.01174299614158,126.4744974248214,124.45606432319181,126.54103079346115,122.99871992282434,128.1690932598797,126.32476314106911,133.5073278458141,130.39792560087764,124.03269754768392,116.07890574113706,0],"type":"bar","xaxis":"x","yaxis":"y"},{"marker":{"color":"#28a745"},"name":"Conso Totale","x":["2012-2013","2013-2014","2014-2015","2015-2016","2016-2017","2017-2018","2018-2019","2019-2020","2020-2021","2021-2022","2022-2023","2023-2024","2024-2025","2025-2026","2026-2027"],"y":[58248.0,43203.0,46523.0,47688.0,48152.0,55843.0,55239.0,53903.0,53367.0,51613.0,39848.0,40108.0,45875.0,43021.0,0.0],"type":"bar","xaxis":"x2","yaxis":"y2"},{"marker":{"color":"#ffc107"},"name":"DJU Total","x":["2012-2013","2013-2014","2014-2015","2015-2016","2016-2017","2017-2018","2018-2019","2019-2020","2020-2021","2021-2022","2022-2023","2023-2024","2024-2025","2025-2026","2026-2027"],"y":[2588.1,2089.8999999999996,2236.8999999999996,2236.2999999999997,2411.0999999999995,2330.8999999999996,2337.7,1964.7000000000003,2429.2,2224.7,2200.9,1987.8,2219.4,2004.8,0],"type":"bar","xaxis":"x3","yaxis":"y3"},{"marker":{"color":"#dc3545"},"name":"Conso\u002fDJU","x":["2012-2013","2013-2014","2014-2015","2015-2016","2016-2017","2017-2018","2018-2019","2019-2020","2020-2021","2021-2022","2022-2023","2023-2024","2024-2025","2025-2026","2026-2027"],"y":[22.50608554538078,20.67228097038136,20.79797934641692,21.324509234002598,19.970967608145664,23.95769874297482,23.62963596697609,27.43574082557133,21.96896097480652,23.19998202004765,18.10532055068381,20.177080189153838,20.67000090114445,21.458998403830808,0.0],"type":"bar","xaxis":"x4","yaxis":"y4"}],                        {"template":{"data":{"barpolar":[{"marker":{"line":{"color":"white","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"white","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"#C8D4E3","linecolor":"#C8D4E3","minorgridcolor":"#C8D4E3","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"#C8D4E3","linecolor":"#C8D4E3","minorgridcolor":"#C8D4E3","startlinecolor":"#2a3f5f"},"type":"carpet"}],"choropleth":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"choropleth"}],"contourcarpet":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"contourcarpet"}],"contour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"contour"}],"heatmapgl":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmapgl"}],"heatmap":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmap"}],"histogram2dcontour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2dcontour"}],"histogram2d":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2d"}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"mesh3d":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"mesh3d"}],"parcoords":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"parcoords"}],"pie":[{"automargin":true,"type":"pie"}],"scatter3d":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatter3d"}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattercarpet"}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergeo"}],"scattergl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergl"}],"scattermapbox":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattermapbox"}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolargl"}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolar"}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterternary"}],"surface":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"surface"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}]},"layout":{"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"autotypenumbers":"strict","coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]],"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"geo":{"bgcolor":"white","lakecolor":"white","landcolor":"white","showlakes":true,"showland":true,"subunitcolor":"#C8D4E3"},"hoverlabel":{"align":"left"},"hovermode":"closest","mapbox":{"style":"light"},"paper_bgcolor":"white","plot_bgcolor":"white","polar":{"angularaxis":{"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":""},"bgcolor":"white","radialaxis":{"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":""}},"scene":{"xaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","gridwidth":2,"linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8"},"yaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","gridwidth":2,"linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8"},"zaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","gridwidth":2,"linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8"}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"ternary":{"aaxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""},"baxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""},"bgcolor":"white","caxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""}},"title":{"x":0.05},"xaxis":{"automargin":true,"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":"","title":{"standoff":15},"zerolinecolor":"#EBF0F8","zerolinewidth":2},"yaxis":{"automargin":true,"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":"","title":{"standoff":15},"zerolinecolor":"#EBF0F8","zerolinewidth":2}}},"xaxis":{"anchor":"y","domain":[0.0,0.45]},"yaxis":{"anchor":"x","domain":[0.625,1.0],"title":{"text":"Rendement (%)"},"range":[100,null]},"xaxis2":{"anchor":"y2","domain":[0.55,1.0]},"yaxis2":{"anchor":"x2","domain":[0.625,1.0],"title":{"text":"Gaz (m\u00b3)"},"range":[30000,null]},"xaxis3":{"anchor":"y3","domain":[0.0,0.45]},"yaxis3":{"anchor":"x3","domain":[0.0,0.375],"title":{"text":"DJU"}},"xaxis4":{"anchor":"y4","domain":[0.55,1.0]},"yaxis4":{"anchor":"x4","domain":[0.0,0.375],"title":{"text":"m\u00b3\u002fDJU"},"range":[15,null]},"annotations":[{"font":{"size":16},"showarrow":false,"text":"Rendement Moyen par Saison","x":0.225,"xanchor":"center","xref":"paper","y":1.0,"yanchor":"bottom","yref":"paper"},{"font":{"size":16},"showarrow":false,"text":"Consommation Totale de Gaz","x":0.775,"xanchor":"center","xref":"paper","y":1.0,"yanchor":"bottom","yref":"paper"},{"font":{"size":16},"showarrow":false,"text":"DJU Total par Saison","x":0.225,"xanchor":"center","xref":"paper","y":0.375,"yanchor":"bottom","yref":"paper"},{"font":{"size":16},"showarrow":false,"text":"Consommation par DJU","x":0.775,"xanchor":"center","xref":"paper","y":0.375,"yanchor":"bottom","yref":"paper"}],"title":{"text":"Comparaison des Saisons de Chauffe"},"height":800,"showlegend":false},                        {"responsive": true, "displaylogo": false}                    )                };                            </script>        </div>
+<h2>Évolution des rendements</h2>
+<div>                            <div id="2af2c5fb-708b-42e3-80bb-55b29388abf4" class="plotly-graph-div" style="height:500px; width:100%;"></div>            <script type="text/javascript">                                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("2af2c5fb-708b-42e3-80bb-55b29388abf4")) {                    Plotly.newPlot(                        "2af2c5fb-708b-42e3-80bb-55b29388abf4",                        [{"line":{"color":"#28a745","width":2},"marker":{"size":6},"mode":"lines+markers","name":"2013-2014","x":[1,2,3,4,5,6],"y":[109.92366412213741,126.59446450060167,127.38853503184713,126.47262647262647,130.3475935828877,129.1604570293095],"type":"scatter"},{"line":{"color":"#ffc107","width":2},"marker":{"size":6},"mode":"lines+markers","name":"2014-2015","x":[1,2,3,4,5,6,7,8],"y":[127.91991101223581,128.643216080402,125.724281185088,126.41717668305408,126.5660956277167,129.19896640826875,132.68998793727383,129.1866028708134],"type":"scatter"},{"line":{"color":"#dc3545","width":2},"marker":{"size":6},"mode":"lines+markers","name":"2015-2016","x":[1,2,3,4,5,6,7,8,9],"y":[139.64899037554255,131.83488221309705,130.00755857898716,126.05042016806722,127.14699977693509,128.74408828166054,129.70168612191958,132.54113345521023,125.0],"type":"scatter"},{"line":{"color":"#6f42c1","width":2},"marker":{"size":6},"mode":"lines+markers","name":"2016-2017","x":[1,2,3,4,5,6,7,8],"y":[129.65964343598054,123.05050794105021,125.24381480340827,120.39127163280664,134.3247781242504,132.92117465224112,140.31300593631948,152.67175572519085],"type":"scatter"},{"line":{"color":"#fd7e14","width":2},"marker":{"size":6},"mode":"lines+markers","name":"2017-2018","x":[1,2,3,4,5,6,7,8,9],"y":[124.94519947391495,124.11100264956072,122.74719922065272,123.60801781737194,123.74395236323036,123.44353799914127,127.3705066515709,144.92753623188406,182.9268292682927],"type":"scatter"},{"line":{"color":"#007bff","width":2},"marker":{"size":6},"mode":"lines+markers","name":"2018-2019","x":[1,2,3,4,5,6,7,8,9],"y":[124.69337694194604,123.15270935960592,124.61059190031152,124.34496846966871,124.57382638342513,133.00861745972276,134.11204845338526,131.0914790538615,134.9072512647555],"type":"scatter"},{"line":{"color":"#28a745","width":2},"marker":{"size":6},"mode":"lines+markers","name":"2019-2020","x":[1,2,3,4,5,6,7,8],"y":[128.64169504351116,113.12217194570135,163.51118760757316,124.44690265486726,142.78515034436418,109.94263862332696,129.3335728399497,120.39967727921554],"type":"scatter"},{"line":{"color":"#ffc107","width":2},"marker":{"size":6},"mode":"lines+markers","name":"2020-2021","x":[1,2,3,4,5,6,7],"y":[139.61241925401126,130.3804250759064,96.50063359001852,140.80782706418987,131.4859324190584,132.08762886597938,132.49651324965131],"type":"scatter"},{"line":{"color":"#dc3545","width":2},"marker":{"size":6},"mode":"lines+markers","name":"2021-2022","x":[1,2,3,4,5,6,7,8],"y":[126.82926829268293,124.8665955176094,126.75418741511997,128.16072047107724,127.79552715654951,128.8497800125707,122.61306532663316,114.7098515519568],"type":"scatter"},{"line":{"color":"#6f42c1","width":2},"marker":{"size":6},"mode":"lines+markers","name":"2022-2023","x":[1,2,3,4,5,6,7,8,9],"y":[229.04483430799218,100.25062656641603,114.27291059825228,147.48107543722267,133.5428122545169,129.7223486572599,164.63615409944023,100.40160642570282,144.0576230492197],"type":"scatter"},{"line":{"color":"#fd7e14","width":2},"marker":{"size":6},"mode":"lines+markers","name":"2023-2024","x":[1,2,3,4,5,6],"y":[132.19544846050871,127.36906460158957,128.14502265979058,131.95777351247602,130.76168682576005,138.80506940253468],"type":"scatter"},{"line":{"color":"#007bff","width":2},"marker":{"size":6},"mode":"lines+markers","name":"2024-2025","x":[1,2,3,4,5],"y":[141.32553606237818,117.1967020023557,122.29052086703331,129.30039251904873,128.6826955638334],"type":"scatter"},{"line":{"color":"#28a745","width":2},"marker":{"size":6},"mode":"lines+markers","name":"2025-2026","x":[1,2,3,4,5,6,7,8],"y":[129.74296205630355,120.48192771084338,123.54830738818879,104.42657795028185,117.22116876400621,119.17206773991218,112.95361691900985,116.98113207547169],"type":"scatter"}],                        {"template":{"data":{"barpolar":[{"marker":{"line":{"color":"white","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"white","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"#C8D4E3","linecolor":"#C8D4E3","minorgridcolor":"#C8D4E3","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"#C8D4E3","linecolor":"#C8D4E3","minorgridcolor":"#C8D4E3","startlinecolor":"#2a3f5f"},"type":"carpet"}],"choropleth":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"choropleth"}],"contourcarpet":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"contourcarpet"}],"contour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"contour"}],"heatmapgl":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmapgl"}],"heatmap":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmap"}],"histogram2dcontour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2dcontour"}],"histogram2d":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2d"}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"mesh3d":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"mesh3d"}],"parcoords":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"parcoords"}],"pie":[{"automargin":true,"type":"pie"}],"scatter3d":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatter3d"}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattercarpet"}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergeo"}],"scattergl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergl"}],"scattermapbox":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattermapbox"}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolargl"}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolar"}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterternary"}],"surface":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"surface"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}]},"layout":{"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"autotypenumbers":"strict","coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]],"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"geo":{"bgcolor":"white","lakecolor":"white","landcolor":"white","showlakes":true,"showland":true,"subunitcolor":"#C8D4E3"},"hoverlabel":{"align":"left"},"hovermode":"closest","mapbox":{"style":"light"},"paper_bgcolor":"white","plot_bgcolor":"white","polar":{"angularaxis":{"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":""},"bgcolor":"white","radialaxis":{"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":""}},"scene":{"xaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","gridwidth":2,"linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8"},"yaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","gridwidth":2,"linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8"},"zaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","gridwidth":2,"linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8"}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"ternary":{"aaxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""},"baxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""},"bgcolor":"white","caxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""}},"title":{"x":0.05},"xaxis":{"automargin":true,"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":"","title":{"standoff":15},"zerolinecolor":"#EBF0F8","zerolinewidth":2},"yaxis":{"automargin":true,"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":"","title":{"standoff":15},"zerolinecolor":"#EBF0F8","zerolinewidth":2}}},"legend":{"orientation":"v","yanchor":"top","y":1,"xanchor":"left","x":1.02},"title":{"text":"Comparaison de l'\u00c9volution des Rendements"},"xaxis":{"title":{"text":"Num\u00e9ro de Relev\u00e9"}},"yaxis":{"title":{"text":"Rendement (%)"},"range":[80,null]},"hovermode":"x unified","height":500},                        {"responsive": true, "displaylogo": false}                    )                };                            </script>        </div>
+
+</main>
+<div class="footer">Rapports générés le 13/10/2026 à 20:33</div>
+</body>
+</html>
