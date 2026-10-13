@@ -4,7 +4,7 @@
 echelles_comparaison:
   # Rendement moyen (%)
   rendement_moyen:
-    y_min: 100
+    y_min: 70
     y_max: null  # null = automatique
     
   # Consommation totale de gaz (m³)
@@ -26,7 +26,7 @@ echelles_comparaison:
 echelles_saison:
   # Rendement par relevé (%)
   rendement:
-    y_min: 80
+    y_min: 60
     y_max: null
     
   # Consommation de gaz par DJU (m³/DJU)

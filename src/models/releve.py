@@ -3,9 +3,7 @@
 from datetime import date
 from typing import Optional
 
-# Constantes de conversion
-M3_GAZ_VERS_KWH = 10.0  # 1 m³ de gaz ≈ 10 kWh (valeur typique)
-CALORIE_COMPTEUR_VERS_KWH = 1000.0  # 1 unité compteur calories = 1 MWh = 1000 kWh
+from src.config import get_config
 
 
 class Releve:
@@ -82,8 +80,9 @@ class Releve:
         """Rendement de la chaudière sur la période (%)."""
         if not self._a_une_periode():
             return None
-        energie_gaz_kwh = self.conso_gaz * M3_GAZ_VERS_KWH
-        calories_kwh = self.calories_produites * CALORIE_COMPTEUR_VERS_KWH
+        config = get_config()
+        energie_gaz_kwh = self.conso_gaz * config.get_coefficient_gaz()
+        calories_kwh = self.calories_produites * config.get_kwh_par_unite_calories()
         # Sans calories comptées (compteur absent ou période trop courte pour
         # sa résolution de 1 MWh), le rendement n'est pas mesurable.
         if energie_gaz_kwh > 0 and calories_kwh > 0:

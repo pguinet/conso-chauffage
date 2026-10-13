@@ -7,6 +7,8 @@ import pytest
 from src.models.releve import Releve
 from src.models.saison import Saison
 
+pytestmark = pytest.mark.usefixtures("coefficient_gaz_10")
+
 CHAMPS_SAISIS = {"date", "index_gaz", "index_calories", "dju"}
 
 

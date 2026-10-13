@@ -15,6 +15,7 @@ from typing import List, Optional
 import plotly.graph_objects as go
 from plotly.offline import get_plotlyjs
 
+from src.config import get_config
 from src.models import Saison
 from .graphiques import (
     figure_comparaison_saisons,
@@ -81,6 +82,8 @@ CSS = """
     .carte span { display: block; color: #666; margin-top: 5px; }
     .carte.en-cours { border-left-color: #28a745; }
     .vide { color: #666; font-style: italic; }
+    .avertissement { background-color: #fff3cd; border-left: 4px solid #ffc107; padding: 10px 15px;
+                     border-radius: 5px; margin: 20px 0; }
     .bouton { display: inline-block; padding: 8px 14px; background: #6c757d; color: white;
               border-radius: 4px; text-decoration: none; }
     .footer { text-align: center; color: #666; font-size: 0.9em; margin: 20px; }
@@ -145,6 +148,20 @@ def _page(titre: str, contenu: str, saisons: List[Saison], fichier: str, plotly:
 """
 
 
+def avertissement_rendement() -> str:
+    """Mise en garde tant que le coefficient de conversion du gaz n'est pas confirmé."""
+    config = get_config()
+    if not config.coefficient_gaz_a_confirmer():
+        return ""
+    coefficient = f"{config.get_coefficient_gaz():g}".replace('.', ',')
+    return (
+        '<p class="avertissement"><strong>Rendement indicatif.</strong> '
+        f'Il est calculé avec un coefficient de conversion du gaz de {coefficient}&nbsp;kWh/m³, '
+        'qui reste à confirmer sur une facture : sa valeur absolue n\'est pas fiable, '
+        'mais les comparaisons entre saisons et les tendances restent valables.</p>\n'
+    )
+
+
 def _periode(saison: Saison) -> str:
     debut = saison.date_debut.strftime('%d/%m/%Y')
     if saison.date_fin is None:
@@ -170,7 +187,7 @@ def _contenu_saison(saison: Saison, precedente: Optional[Saison], suivante: Opti
     if len(saison.releves) < 2:
         return html + '<p class="vide">Pas encore assez de relevés pour calculer des indicateurs.</p>\n'
 
-    html += html_stats_saison(saison)
+    html += html_stats_saison(saison) + avertissement_rendement()
 
     html += "<h2>Rendement</h2>\n"
     if any(r.rendement is not None for r in saison.releves):
@@ -193,7 +210,7 @@ def _contenu_saison(saison: Saison, precedente: Optional[Saison], suivante: Opti
 def _contenu_comparaison(saisons: List[Saison]) -> str:
     """Contenu de la page de comparaison."""
     return f"""<h1>Comparaison des saisons</h1>
-<p><a class="bouton" href="{CSV_COMPARAISON}" download>Télécharger le CSV</a></p>
+{avertissement_rendement()}<p><a class="bouton" href="{CSV_COMPARAISON}" download>Télécharger le CSV</a></p>
 <div class="table-scroll">
 {html_tableau_comparaison(saisons, lien_saison=page_saison)}</div>
 <h2>Indicateurs par saison</h2>
@@ -220,7 +237,7 @@ def _contenu_accueil(saisons: List[Saison]) -> str:
 """
     return f"""<h1>Suivi de consommation de la chaudière</h1>
 <p>{len(saisons)} saison(s) de chauffe. <a href="{PAGE_COMPARAISON}">Comparer les saisons →</a></p>
-<div class="cartes">
+{avertissement_rendement()}<div class="cartes">
 {cartes}</div>
 """
 

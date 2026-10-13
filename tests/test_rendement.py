@@ -7,6 +7,8 @@ import pytest
 from src.models.releve import Releve
 from src.models.saison import Saison
 
+pytestmark = pytest.mark.usefixtures("coefficient_gaz_10")
+
 
 def releve(jour, gaz, calories, dju=10.0):
     return Releve(date_releve=date(2026, 1, jour), index_gaz=gaz, index_calories=calories, dju=dju)

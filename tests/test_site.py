@@ -113,3 +113,20 @@ def test_anciens_fichiers_supprimes(tmp_path, saisons):
     assert not (tmp_path / "graphique_complet_2013-2014.html").exists()
     assert not (tmp_path / "rapport_2013-2014.html").exists()
     assert (tmp_path / "notes.txt").exists()
+
+
+def test_avertissement_tant_que_le_coefficient_est_a_confirmer(site):
+    for page in ("index.html", "saison_2013-2014.html", "comparaison.html"):
+        assert "Rendement indicatif" in (site / page).read_text(encoding="utf-8"), page
+
+
+def test_pas_d_avertissement_une_fois_confirme(tmp_path, saisons, monkeypatch):
+    import src.config
+    (tmp_path / "config").mkdir()
+    (tmp_path / "config" / "calculs.yaml").write_text(
+        "gaz:\n  coefficient_kwh_par_m3: 13.0\n  a_confirmer: false\n", encoding="utf-8")
+    monkeypatch.setattr(src.config, "_config", src.config.Config(tmp_path / "config"))
+
+    generer_site(saisons, tmp_path / "site")
+
+    assert "Rendement indicatif" not in (tmp_path / "site" / "index.html").read_text(encoding="utf-8")

@@ -52,3 +52,11 @@ def test_lecture_affiche_les_donnees_a_jour(fichier):
         client.get("/")
 
     assert app_module.data_manager.saisons[0].releves[0].dju == 99.0
+
+
+@pytest.mark.parametrize("url", ["/", "/saison/2025-2026", "/comparaison"])
+def test_avertissement_rendement_dans_l_appli(fichier, url):
+    with app_module.app.test_client() as client:
+        page = client.get(url).get_data(as_text=True)
+
+    assert "Rendement indicatif" in page

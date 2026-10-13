@@ -2,7 +2,7 @@
 
 from typing import List, Dict
 from src.models import Saison
-from src.models.releve import M3_GAZ_VERS_KWH, CALORIE_COMPTEUR_VERS_KWH
+from src.config import get_config
 
 
 def calculer_rendement(calories_produites: float, gaz_consomme: float) -> float:
@@ -19,8 +19,9 @@ def calculer_rendement(calories_produites: float, gaz_consomme: float) -> float:
     if gaz_consomme <= 0:
         return 0.0
 
-    energie_gaz_kwh = gaz_consomme * M3_GAZ_VERS_KWH
-    calories_kwh = calories_produites * CALORIE_COMPTEUR_VERS_KWH  # Conversion MWh -> kWh
+    config = get_config()
+    energie_gaz_kwh = gaz_consomme * config.get_coefficient_gaz()
+    calories_kwh = calories_produites * config.get_kwh_par_unite_calories()
     rendement = (calories_kwh / energie_gaz_kwh) * 100
 
     return rendement
