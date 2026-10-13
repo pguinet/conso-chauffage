@@ -82,6 +82,7 @@ conso-chauffage/
 **`Releve`** (releve.py)
 - Attributs : date, index_gaz, index_calories, dju
 - Valeurs calculées : conso_gaz, conso_gaz_par_dju, calories_produites, calories_par_dju, rendement
+- Rendement `None` (non mesurable) si aucune calorie n'a été comptée sur la période (compteur absent ou période trop courte pour sa résolution de 1 MWh)
 - Méthode `calculer_indicateurs()` : calcule les indicateurs par rapport au relevé précédent
 - Conversion dict/objet pour sérialisation YAML
 
@@ -89,6 +90,7 @@ conso-chauffage/
 - Attributs : nom, date_debut, date_fin, liste de relevés
 - Méthode `ajouter_releve()` : ajoute un relevé et calcule automatiquement ses indicateurs
 - Méthodes statistiques : rendement_moyen, conso_totale, calories_totales, dju_total
+- `get_rendement_moyen()` : moyenne pondérée par la consommation de gaz (Σ calories / Σ énergie gaz) sur les périodes mesurables
 - Gestion saison en cours (date_fin = None)
 
 #### 2. Moteur de Calculs (`src/calculs/`)
@@ -131,6 +133,8 @@ Routes principales :
 - `/rapports/saison/<nom>/html|csv` : Génération rapports
 - `/graphiques/saison/<nom>/rendement|complet` : Génération graphiques
 - `/init-exemple` : Création données d'exemple
+
+Le fichier YAML est relu avant chaque requête (`before_request`) : les modifications faites hors de l'application ne sont jamais écrasées.
 
 **Templates HTML**
 - `base.html` : Template de base avec navigation et styles CSS

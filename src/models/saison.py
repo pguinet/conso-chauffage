@@ -51,13 +51,18 @@ class Saison:
         """
         Calcule le rendement moyen de la saison.
 
+        Moyenne des rendements pondérée par la consommation de gaz, soit
+        Σ calories / Σ énergie gaz, sur les seules périodes mesurables :
+        une période courte ne pèse pas autant qu'une période longue.
+
         Returns:
             Le rendement moyen en %, ou None si pas de données
         """
-        rendements = [r.rendement for r in self.releves if r.rendement is not None]
-        if not rendements:
+        mesures = [r for r in self.releves if r.rendement is not None and r.conso_gaz]
+        conso_totale = sum(r.conso_gaz for r in mesures)
+        if conso_totale <= 0:
             return None
-        return sum(rendements) / len(rendements)
+        return sum(r.rendement * r.conso_gaz for r in mesures) / conso_totale
 
     def get_conso_totale_gaz(self) -> float:
         """

@@ -59,7 +59,9 @@ class Releve:
         # 1 unité compteur calories = 1 MWh = 1000 kWh
         energie_gaz_kwh = self.conso_gaz * 10
         calories_kwh = self.calories_produites * 1000  # Conversion MWh -> kWh
-        if energie_gaz_kwh > 0:
+        # Sans calories comptées (compteur absent ou période trop courte pour
+        # sa résolution de 1 MWh), le rendement n'est pas mesurable.
+        if energie_gaz_kwh > 0 and calories_kwh > 0:
             self.rendement = (calories_kwh / energie_gaz_kwh) * 100
         else:
             self.rendement = None
