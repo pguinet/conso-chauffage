@@ -1162,3 +1162,7 @@ saisons:
     calories_produites: 0.0
     calories_par_dju: 0.0
     rendement: 0.0
+- nom: 2026-2027
+  date_debut: '2026-10-15'
+  date_fin: null
+  releves: []
