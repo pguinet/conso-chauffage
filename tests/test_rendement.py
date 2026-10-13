@@ -55,3 +55,23 @@ def test_rendement_saison_sans_compteur_calories():
 
 def test_rendement_saison_vide():
     assert Saison(nom="vide", date_debut=date(2026, 1, 1)).get_rendement_moyen() is None
+
+
+def test_rendement_global_ignore_les_periodes_sans_calories():
+    from src.calculs.rendement import comparer_saisons
+
+    # 2873 m³ sans compteur calories, puis 1000 m³ à 120 %
+    s = saison_avec(releve(10, 2873.0, 0.0), releve(20, 3873.0, 12.0))
+
+    stats = comparer_saisons([s])["test"]
+
+    assert stats["rendement_global"] == pytest.approx(120.0)
+    assert stats["rendement_global"] == pytest.approx(stats["rendement_moyen"])
+
+
+def test_rendement_global_sans_compteur_calories():
+    from src.calculs.rendement import comparer_saisons
+
+    s = saison_avec(releve(10, 1000.0, 0.0))
+
+    assert comparer_saisons([s])["test"]["rendement_global"] is None
