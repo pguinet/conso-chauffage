@@ -47,6 +47,17 @@ dju_fetcher = DJUFetcher(
 )
 
 
+@app.before_request
+def recharger_donnees():
+    """
+    Relit le fichier YAML à chaque requête.
+
+    Évite d'afficher des données périmées et, surtout, d'écraser à la
+    prochaine sauvegarde les modifications faites hors de l'application.
+    """
+    data_manager.charger_donnees()
+
+
 # Context processor pour rendre la date disponible dans tous les templates
 @app.context_processor
 def inject_now():

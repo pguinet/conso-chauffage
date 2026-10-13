@@ -20,7 +20,7 @@ saisons:
     conso_gaz_par_dju: 22.753077116302435
     calories_produites: 0.0
     calories_par_dju: 0.0
-    rendement: 0.0
+    rendement: null
   - date: '2013-01-30'
     index_gaz: 28023.0
     index_calories: 0.0
@@ -29,7 +29,7 @@ saisons:
     conso_gaz_par_dju: 22.274472168905948
     calories_produites: 0.0
     calories_par_dju: 0.0
-    rendement: 0.0
+    rendement: null
   - date: '2013-02-27'
     index_gaz: 37757.0
     index_calories: 0.0
@@ -38,7 +38,7 @@ saisons:
     conso_gaz_par_dju: 22.584686774941996
     calories_produites: 0.0
     calories_par_dju: 0.0
-    rendement: 0.0
+    rendement: null
   - date: '2013-03-29'
     index_gaz: 47036.0
     index_calories: 0.0
@@ -47,7 +47,7 @@ saisons:
     conso_gaz_par_dju: 22.792925571112747
     calories_produites: 0.0
     calories_par_dju: 0.0
-    rendement: 0.0
+    rendement: null
   - date: '2013-04-26'
     index_gaz: 52558.0
     index_calories: 0.0
@@ -56,7 +56,7 @@ saisons:
     conso_gaz_par_dju: 21.69744597249509
     calories_produites: 0.0
     calories_par_dju: 0.0
-    rendement: 0.0
+    rendement: null
   - date: '2013-05-30'
     index_gaz: 57678.0
     index_calories: 0.0
@@ -65,7 +65,7 @@ saisons:
     conso_gaz_par_dju: 21.731748726655347
     calories_produites: 0.0
     calories_par_dju: 0.0
-    rendement: 0.0
+    rendement: null
   - date: '2013-06-06'
     index_gaz: 58248.0
     index_calories: 0.0
@@ -74,7 +74,7 @@ saisons:
     conso_gaz_par_dju: 20.070422535211268
     calories_produites: 0.0
     calories_par_dju: 0.0
-    rendement: 0.0
+    rendement: null
 - nom: 2013-2014
   date_debut: '2013-10-11'
   date_fin: '2014-05-20'
@@ -96,7 +96,7 @@ saisons:
     conso_gaz_par_dju: 22.783505154639176
     calories_produites: 0.0
     calories_par_dju: 0.0
-    rendement: 0.0
+    rendement: null
   - date: '2013-11-25'
     index_gaz: 66361.0
     index_calories: 57.6
@@ -1161,4 +1161,8 @@ saisons:
     conso_gaz_par_dju: 0.717391304347826
     calories_produites: 0.0
     calories_par_dju: 0.0
-    rendement: 0.0
+    rendement: null
+- nom: 2026-2027
+  date_debut: '2026-10-15'
+  date_fin: null
+  releves: []

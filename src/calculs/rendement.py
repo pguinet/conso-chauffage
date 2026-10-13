@@ -1,7 +1,7 @@
 """Module de calcul pour les indicateurs de performance de la chaudière."""
 
 from typing import List, Dict
-from src.models import Saison, Releve
+from src.models import Saison
 
 
 # Constantes de conversion
@@ -95,11 +95,14 @@ def comparer_saisons(saisons: List[Saison]) -> Dict[str, Dict]:
             stats['conso_par_dju'] = 0.0
             stats['calories_par_dju'] = 0.0
 
-        # Rendement global de la saison
-        if stats['conso_totale_gaz'] > 0:
+        # Rendement global de la saison, sur les seules périodes mesurables
+        # (calories comptées) pour rester cohérent avec le rendement moyen
+        mesures = [r for r in saison.releves if r.rendement is not None]
+        gaz_mesure = sum(r.conso_gaz for r in mesures)
+        if gaz_mesure > 0:
             stats['rendement_global'] = calculer_rendement(
-                stats['calories_totales'],
-                stats['conso_totale_gaz']
+                sum(r.calories_produites for r in mesures),
+                gaz_mesure
             )
         else:
             stats['rendement_global'] = None
