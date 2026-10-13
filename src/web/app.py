@@ -28,6 +28,7 @@ from src.rapports import (
     generer_graphique_rendements_compares
 )
 from src.services import DJUFetcher, DJUCache
+from src.config import get_config
 
 # Configuration du logging
 logging.basicConfig(level=logging.INFO)
@@ -63,6 +64,21 @@ def recharger_donnees():
 def inject_now():
     """Injecte la date/heure actuelle dans tous les templates."""
     return {'now': datetime.now()}
+
+
+@app.context_processor
+def inject_avertissement_rendement():
+    """Mise en garde sur le rendement tant que le coefficient du gaz est à confirmer."""
+    config = get_config()
+    if not config.coefficient_gaz_a_confirmer():
+        return {'avertissement_rendement': None}
+    coefficient = f"{config.get_coefficient_gaz():g}".replace('.', ',')
+    return {'avertissement_rendement': (
+        f"<strong>Rendement indicatif.</strong> Il est calculé avec un coefficient de "
+        f"conversion du gaz de {coefficient}&nbsp;kWh/m³ (config/calculs.yaml), qui reste à "
+        f"confirmer sur une facture : sa valeur absolue n'est pas fiable, mais les "
+        f"comparaisons entre saisons et les tendances restent valables."
+    )}
 
 
 @app.route('/')

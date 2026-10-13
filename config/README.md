@@ -1,6 +1,24 @@
-# Configuration des Graphiques
+# Configuration
 
-Ce dossier contient les fichiers de configuration pour personnaliser l'apparence et les échelles des graphiques.
+Ce dossier contient les fichiers de configuration de l'application.
+
+## Fichier `calculs.yaml`
+
+Paramètres du calcul du rendement :
+
+```yaml
+gaz:
+  coefficient_kwh_par_m3: 10.0   # coefficient de conversion de la facture de gaz (kWh/m³)
+  a_confirmer: true              # mise en garde dans les rapports tant que non vérifié
+compteur_calories:
+  kwh_par_unite: 1000.0          # 1 unité du compteur = 1 MWh
+```
+
+Le coefficient de conversion figure sur les factures de gaz (« coefficient de
+conversion » ou « coefficient thermique »). Il combine le PCS du gaz et la
+correction de pression et de température du compteur. Une fois la valeur
+reportée, passer `a_confirmer` à `false`.
+
 
 ## Fichier `graphiques.yaml`
 

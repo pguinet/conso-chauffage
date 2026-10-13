@@ -97,9 +97,10 @@ conso-chauffage/
 
 #### 2. Moteur de Calculs (`src/calculs/`)
 
-**Constantes** :
-- 1 m³ gaz = 10 kWh
-- 1 calorie compteur = 1 kWh
+**Coefficients** (réglables dans `config/calculs.yaml`) :
+- Gaz : `coefficient_kwh_par_m3` = coefficient de conversion de la facture (PCS × correction pression/température). Valeur actuelle : 10 kWh/m³, **à confirmer sur une facture** (`a_confirmer: true`) : les rendements obtenus (116 à 134 %) montrent qu'elle est trop basse, probablement parce que le compteur de la chaufferie est sous pression
+- Compteur calories : `kwh_par_unite` = 1000 (1 unité = 1 MWh)
+- Tant que `a_confirmer` vaut `true`, les rapports et l'appli web affichent une mise en garde « Rendement indicatif » (les comparaisons entre saisons restent valables : le coefficient est un facteur commun)
 
 **Fonctions** :
 - `calculer_rendement()` : (calories / énergie_gaz) × 100

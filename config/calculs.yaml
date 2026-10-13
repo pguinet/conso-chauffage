@@ -1,0 +1,17 @@
+# Paramètres de calcul du rendement de la chaudière
+
+gaz:
+  # Coefficient de conversion du gaz, en kWh par m³ compté : il figure sur
+  # les factures (« coefficient de conversion » ou « coefficient thermique »).
+  # Il combine le PCS du gaz (~11,2 kWh/m³ en Île-de-France) et la correction
+  # de pression et de température du compteur : pour un compteur de
+  # chaufferie alimenté sous pression, il peut dépasser 13 kWh/m³.
+  coefficient_kwh_par_m3: 10.0
+
+  # true tant que le coefficient n'a pas été vérifié sur une facture :
+  # les rapports affichent alors une mise en garde sur le rendement.
+  a_confirmer: true
+
+compteur_calories:
+  # Énergie représentée par une unité du compteur calories (1 MWh = 1000 kWh)
+  kwh_par_unite: 1000.0

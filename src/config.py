@@ -21,6 +21,45 @@ class Config:
             self.config_dir = Path(config_dir)
         
         self._graphiques_config = None
+        self._calculs_config = None
+
+    def load_calculs_config(self) -> Dict[str, Any]:
+        """
+        Charge la configuration des calculs (config/calculs.yaml).
+
+        Returns:
+            Dictionnaire de configuration, vide si le fichier n'existe pas
+        """
+        if self._calculs_config is None:
+            config_file = self.config_dir / 'calculs.yaml'
+            if config_file.exists():
+                with open(config_file, 'r', encoding='utf-8') as f:
+                    self._calculs_config = yaml.safe_load(f) or {}
+            else:
+                self._calculs_config = {}
+        return self._calculs_config
+
+    def _valeur_positive(self, section: str, cle: str, defaut: float) -> float:
+        valeur = self.load_calculs_config().get(section, {}).get(cle, defaut)
+        try:
+            valeur = float(valeur)
+        except (TypeError, ValueError):
+            raise ValueError(f"{section}.{cle} doit être un nombre : {valeur!r}")
+        if valeur <= 0:
+            raise ValueError(f"{section}.{cle} doit être strictement positif : {valeur}")
+        return valeur
+
+    def get_coefficient_gaz(self) -> float:
+        """Coefficient de conversion du gaz en kWh par m³ compté (défaut : 10)."""
+        return self._valeur_positive('gaz', 'coefficient_kwh_par_m3', 10.0)
+
+    def coefficient_gaz_a_confirmer(self) -> bool:
+        """Vrai tant que le coefficient du gaz n'a pas été vérifié sur une facture."""
+        return bool(self.load_calculs_config().get('gaz', {}).get('a_confirmer', True))
+
+    def get_kwh_par_unite_calories(self) -> float:
+        """Énergie d'une unité du compteur calories en kWh (défaut : 1000, soit 1 MWh)."""
+        return self._valeur_positive('compteur_calories', 'kwh_par_unite', 1000.0)
     
     def load_graphiques_config(self) -> Dict[str, Any]:
         """
