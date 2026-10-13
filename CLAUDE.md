@@ -81,14 +81,15 @@ conso-chauffage/
 
 **`Releve`** (releve.py)
 - Attributs : date, index_gaz, index_calories, dju
-- Valeurs calculées : conso_gaz, conso_gaz_par_dju, calories_produites, calories_par_dju, rendement
+- Valeurs calculées (propriétés, jamais stockées) : conso_gaz, conso_gaz_par_dju, calories_produites, calories_par_dju, rendement
 - Rendement `None` (non mesurable) si aucune calorie n'a été comptée sur la période (compteur absent ou période trop courte pour sa résolution de 1 MWh)
-- Méthode `calculer_indicateurs()` : calcule les indicateurs par rapport au relevé précédent
-- Conversion dict/objet pour sérialisation YAML
+- Méthode `calculer_indicateurs()` : relie le relevé au précédent ; les indicateurs sont calculés à la volée
+- Conversion dict/objet pour sérialisation YAML : seules les 4 données saisies sont écrites, les valeurs calculées d'anciens fichiers sont ignorées
 
 **`Saison`** (saison.py)
 - Attributs : nom, date_debut, date_fin, liste de relevés
-- Méthode `ajouter_releve()` : ajoute un relevé et calcule automatiquement ses indicateurs
+- Méthode `ajouter_releve()` : insère un relevé à sa place chronologique (un relevé oublié peut être ajouté après coup)
+- Méthode `get_duree_jours()` : durée de la saison (None si en cours)
 - Méthodes statistiques : rendement_moyen, conso_totale, calories_totales, dju_total
 - `get_rendement_moyen()` : moyenne pondérée par la consommation de gaz (Σ calories / Σ énergie gaz) sur les périodes mesurables
 - Gestion saison en cours (date_fin = None)
