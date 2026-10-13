@@ -1,8 +1,8 @@
 """Service de récupération des DJU (Degrés Jours Unifiés)."""
 
 import requests
-from datetime import date, datetime, timedelta
-from typing import Optional, List
+from datetime import date, timedelta
+from typing import Optional, List, Sequence
 import logging
 
 logger = logging.getLogger(__name__)
@@ -167,6 +167,56 @@ class DJUFetcher:
 
         return round(dju, 1)
 
+    @staticmethod
+    def debut_periode(date_dernier_releve: date) -> date:
+        """
+        Premier jour de la période couverte par un relevé.
+
+        Le jour du relevé précédent est exclu : il est déjà compté dans
+        la période de ce relevé précédent.
+        """
+        return date_dernier_releve + timedelta(days=1)
+
+    def get_dju_par_releves(
+        self,
+        dates_releves: Sequence[date],
+        base_temp: float = BASE_TEMP
+    ) -> Optional[List[float]]:
+        """
+        Calcule les DJU entre relevés successifs avec un seul appel API.
+
+        Pour chaque relevé à partir du deuxième, la période va du lendemain
+        du relevé précédent au jour du relevé inclus.
+
+        Args:
+            dates_releves: Dates des relevés, triées par ordre croissant
+            base_temp: Température de base
+
+        Returns:
+            Liste des DJU (un élément par relevé à partir du deuxième), ou None
+        """
+        if len(dates_releves) < 2:
+            return []
+        if any(b <= a for a, b in zip(dates_releves, dates_releves[1:])):
+            logger.error("Les dates des relevés doivent être strictement croissantes")
+            return None
+
+        debut = self.debut_periode(dates_releves[0])
+        temperatures = self._fetch_temperatures_open_meteo(debut, dates_releves[-1])
+        nb_jours = (dates_releves[-1] - debut).days + 1
+        if not temperatures or len(temperatures) != nb_jours:
+            logger.error("Températures manquantes pour la période demandée")
+            return None
+
+        resultats = []
+        for precedent, courant in zip(dates_releves, dates_releves[1:]):
+            i_debut = (self.debut_periode(precedent) - debut).days
+            i_fin = (courant - debut).days + 1
+            resultats.append(
+                self.calculate_dju_from_temperatures(temperatures[i_debut:i_fin], base_temp)
+            )
+        return resultats
+
     def get_dju_depuis_dernier_releve(
         self,
         date_dernier_releve: date,
@@ -184,8 +234,7 @@ class DJUFetcher:
         Returns:
             DJU sur la période ou None
         """
-        # Exclure le jour du dernier relevé (déjà compté)
-        date_debut = date_dernier_releve + timedelta(days=1)
+        date_debut = self.debut_periode(date_dernier_releve)
 
         if date_nouveau_releve <= date_dernier_releve:
             logger.error("La date du nouveau relevé doit être postérieure au dernier relevé")

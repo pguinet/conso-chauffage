@@ -268,11 +268,14 @@ def init_exemple():
 @app.route('/api/dju/calculate', methods=['POST'])
 def calculate_dju():
     """
-    Calcule automatiquement les DJU pour une période donnée.
+    Calcule automatiquement les DJU depuis le dernier relevé.
+
+    La période va du lendemain du dernier relevé au jour du nouveau relevé
+    inclus, pour ne pas compter deux fois le jour du dernier relevé.
 
     Paramètres JSON attendus:
-    - date_debut: Date de début (ISO format)
-    - date_fin: Date de fin (ISO format)
+    - date_dernier_releve: Date du dernier relevé (ISO format)
+    - date_releve: Date du nouveau relevé (ISO format)
     - base_temp: Température de base (optionnel, défaut: 18.0)
 
     Returns:
@@ -288,19 +291,29 @@ def calculate_dju():
             }), 400
 
         # Récupérer les paramètres
-        date_debut_str = data.get('date_debut')
-        date_fin_str = data.get('date_fin')
+        date_dernier_str = data.get('date_dernier_releve')
+        date_releve_str = data.get('date_releve')
         base_temp = float(data.get('base_temp', 18.0))
 
-        if not date_debut_str or not date_fin_str:
+        if not date_dernier_str or not date_releve_str:
             return jsonify({
-                'error': 'date_debut et date_fin sont requis',
+                'error': 'date_dernier_releve et date_releve sont requis',
                 'success': False
             }), 400
 
         # Convertir les dates
-        date_debut = datetime.strptime(date_debut_str, '%Y-%m-%d').date()
-        date_fin = datetime.strptime(date_fin_str, '%Y-%m-%d').date()
+        date_dernier = datetime.strptime(date_dernier_str, '%Y-%m-%d').date()
+        date_fin = datetime.strptime(date_releve_str, '%Y-%m-%d').date()
+
+        if date_fin <= date_dernier:
+            return jsonify({
+                'error': 'La date du relevé doit être postérieure au dernier relevé',
+                'success': False
+            }), 400
+
+        date_debut = DJUFetcher.debut_periode(date_dernier)
+        date_debut_str = date_debut.isoformat()
+        date_fin_str = date_fin.isoformat()
 
         logger.info(f"Calcul DJU demandé pour {date_debut} à {date_fin}")
 

@@ -229,7 +229,7 @@ python scripts/generate_all_reports.py
 - Récupération automatique des températures via **Open-Meteo API** (gratuit, sans clé)
 - Calcul des DJU à partir des températures moyennes journalières
 - Formule : DJU = Σ (18°C - température_moyenne) pour chaque jour où temp < 18°C
-- Support de périodes arbitraires (depuis dernier relevé)
+- Période : du lendemain du dernier relevé au jour du relevé inclus
 - Coordonnées Le Bourget : 48.9694°N, 2.4414°E
 
 **API utilisée** : [Open-Meteo Archive API](https://archive-api.open-meteo.com)
@@ -244,7 +244,7 @@ python scripts/generate_all_reports.py
 **Fonctionnalités** :
 - Stockage local des DJU dans `data/dju_cache.json`
 - Évite les appels API répétés pour les mêmes périodes
-- Clé de cache : `date_debut_date_fin_base_temp`
+- Clé de cache : `date_debut_date_fin_base_temp` (période réellement calculée)
 - Statistiques du cache disponibles via API
 
 ### Intégration Interface Web
@@ -254,11 +254,15 @@ python scripts/generate_all_reports.py
 **Paramètres JSON** :
 ```json
 {
-  "date_debut": "2024-09-15",
-  "date_fin": "2024-10-20",
+  "date_dernier_releve": "2024-09-15",
+  "date_releve": "2024-10-20",
   "base_temp": 18.0
 }
 ```
+
+La période de calcul va du **lendemain** du dernier relevé au jour du relevé inclus :
+chaque jour n'est compté qu'une seule fois. Pour recalculer les DJU de tous les relevés
+avec cette convention : `python scripts/recalculer_dju.py [--ecrire]`.
 
 **Réponse** :
 ```json
