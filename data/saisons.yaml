@@ -6,7 +6,7 @@ saisons:
   - date: '2012-11-30'
     index_gaz: 9681.0
     index_calories: 0.0
-    dju: 419.0
+    dju: 0.0
   - date: '2013-01-02'
     index_gaz: 18739.0
     index_calories: 0.0
