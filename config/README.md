@@ -8,7 +8,7 @@ Paramètres du calcul du rendement :
 
 ```yaml
 gaz:
-  coefficient_kwh_par_m3: 10.0   # coefficient de conversion de la facture de gaz (kWh/m³)
+  coefficient_kwh_par_m3: 13.5   # coefficient de conversion de la facture de gaz (kWh/m³)
   a_confirmer: true              # mise en garde dans les rapports tant que non vérifié
 compteur_calories:
   kwh_par_unite: 1000.0          # 1 unité du compteur = 1 MWh
@@ -30,7 +30,7 @@ Ce fichier permet de configurer les échelles des axes Y pour tous les graphique
 echelles_comparaison:
   # Configuration des graphiques de comparaison entre saisons
   rendement_moyen:
-    y_min: 100      # Valeur minimale de l'axe Y
+    y_min: 70      # Valeur minimale de l'axe Y
     y_max: null     # Valeur maximale (null = automatique)
     
   conso_totale_gaz:
@@ -44,7 +44,7 @@ echelles_comparaison:
 echelles_saison:
   # Configuration des graphiques d'évolution par saison
   rendement:
-    y_min: 80
+    y_min: 60
     y_max: null
     
   conso_gaz_par_dju:

@@ -6,7 +6,8 @@ gaz:
   # Il combine le PCS du gaz (~11,2 kWh/m³ en Île-de-France) et la correction
   # de pression et de température du compteur : pour un compteur de
   # chaufferie alimenté sous pression, il peut dépasser 13 kWh/m³.
-  coefficient_kwh_par_m3: 10.0
+  # 13,5 est une estimation (compteur sous pression), en attendant une facture.
+  coefficient_kwh_par_m3: 13.5
 
   # true tant que le coefficient n'a pas été vérifié sur une facture :
   # les rapports affichent alors une mise en garde sur le rendement.

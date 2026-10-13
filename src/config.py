@@ -50,8 +50,8 @@ class Config:
         return valeur
 
     def get_coefficient_gaz(self) -> float:
-        """Coefficient de conversion du gaz en kWh par m³ compté (défaut : 10)."""
-        return self._valeur_positive('gaz', 'coefficient_kwh_par_m3', 10.0)
+        """Coefficient de conversion du gaz en kWh par m³ compté (défaut : 13,5)."""
+        return self._valeur_positive('gaz', 'coefficient_kwh_par_m3', 13.5)
 
     def coefficient_gaz_a_confirmer(self) -> bool:
         """Vrai tant que le coefficient du gaz n'a pas été vérifié sur une facture."""
@@ -136,13 +136,13 @@ class Config:
         """
         return {
             'echelles_comparaison': {
-                'rendement_moyen': {'y_min': 100, 'y_max': None},
+                'rendement_moyen': {'y_min': 70, 'y_max': None},
                 'conso_totale_gaz': {'y_min': 30000, 'y_max': None},
                 'conso_par_dju': {'y_min': 15, 'y_max': None},
                 'calories_par_dju': {'y_min': 0, 'y_max': None}
             },
             'echelles_saison': {
-                'rendement': {'y_min': 80, 'y_max': None},
+                'rendement': {'y_min': 60, 'y_max': None},
                 'conso_gaz_par_dju': {'y_min': 10, 'y_max': None},
                 'calories_par_dju': {'y_min': 0, 'y_max': None}
             },
