@@ -29,23 +29,24 @@ class Saison:
 
     def ajouter_releve(self, releve: Releve) -> None:
         """
-        Ajoute un relevé à la saison et calcule ses indicateurs.
+        Ajoute un relevé à la saison, à sa place chronologique.
+
+        Un relevé oublié peut donc être ajouté après coup : le relevé suivant
+        est alors calculé par rapport à lui.
 
         Args:
             releve: Le relevé à ajouter
         """
-        # Calculer les indicateurs si ce n'est pas le premier relevé
-        if len(self.releves) > 0:
-            releve_precedent = self.releves[-1]
-            releve.calculer_indicateurs(releve_precedent)
-
         self.releves.append(releve)
+        self.releves.sort(key=lambda r: r.date_releve)
+        self.recalculer_tous_les_indicateurs()
 
     def recalculer_tous_les_indicateurs(self) -> None:
-        """Recalcule tous les indicateurs de tous les relevés de la saison."""
-        for i, releve in enumerate(self.releves):
-            if i > 0:
-                releve.calculer_indicateurs(self.releves[i - 1])
+        """Relie chaque relevé à son précédent, base du calcul des indicateurs."""
+        precedent = None
+        for releve in self.releves:
+            releve.calculer_indicateurs(precedent)
+            precedent = releve
 
     def get_rendement_moyen(self) -> Optional[float]:
         """
@@ -99,6 +100,17 @@ class Saison:
         """Vérifie si la saison est en cours."""
         return self.date_fin is None
 
+    def get_duree_jours(self) -> Optional[int]:
+        """
+        Calcule la durée de la saison en jours.
+
+        Returns:
+            Le nombre de jours de la saison, ou None si la saison est en cours
+        """
+        if self.date_fin is None:
+            return None
+        return (self.date_fin - self.date_debut).days
+
     def to_dict(self) -> dict:
         """Convertit la saison en dictionnaire."""
         return {
@@ -122,8 +134,8 @@ class Saison:
 
         # Ajouter les relevés
         for releve_data in data.get('releves', []):
-            releve = Releve.from_dict(releve_data)
-            saison.releves.append(releve)
+            saison.releves.append(Releve.from_dict(releve_data))
+        saison.recalculer_tous_les_indicateurs()
 
         return saison
 

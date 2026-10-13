@@ -2,11 +2,7 @@
 
 from typing import List, Dict
 from src.models import Saison
-
-
-# Constantes de conversion
-M3_GAZ_VERS_KWH = 10.0  # 1 m³ de gaz ≈ 10 kWh (valeur typique)
-CALORIE_COMPTEUR_VERS_KWH = 1000.0  # 1 unité compteur calories = 1 MWh = 1000 kWh
+from src.models.releve import M3_GAZ_VERS_KWH, CALORIE_COMPTEUR_VERS_KWH
 
 
 def calculer_rendement(calories_produites: float, gaz_consomme: float) -> float:
@@ -79,6 +75,7 @@ def comparer_saisons(saisons: List[Saison]) -> Dict[str, Dict]:
             'nom': saison.nom,
             'date_debut': saison.date_debut,
             'date_fin': saison.date_fin,
+            'duree_jours': saison.get_duree_jours(),
             'en_cours': saison.est_en_cours(),
             'nombre_releves': len(saison.releves),
             'conso_totale_gaz': saison.get_conso_totale_gaz(),

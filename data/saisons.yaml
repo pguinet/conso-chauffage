@@ -7,74 +7,34 @@ saisons:
     index_gaz: 9681.0
     index_calories: 0.0
     dju: 419.0
-    conso_gaz: null
-    conso_gaz_par_dju: null
-    calories_produites: null
-    calories_par_dju: null
-    rendement: null
   - date: '2013-01-02'
     index_gaz: 18739.0
     index_calories: 0.0
     dju: 398.1
-    conso_gaz: 9058.0
-    conso_gaz_par_dju: 22.753077116302435
-    calories_produites: 0.0
-    calories_par_dju: 0.0
-    rendement: null
   - date: '2013-01-30'
     index_gaz: 28023.0
     index_calories: 0.0
     dju: 416.8
-    conso_gaz: 9284.0
-    conso_gaz_par_dju: 22.274472168905948
-    calories_produites: 0.0
-    calories_par_dju: 0.0
-    rendement: null
   - date: '2013-02-27'
     index_gaz: 37757.0
     index_calories: 0.0
     dju: 431.0
-    conso_gaz: 9734.0
-    conso_gaz_par_dju: 22.584686774941996
-    calories_produites: 0.0
-    calories_par_dju: 0.0
-    rendement: null
   - date: '2013-03-29'
     index_gaz: 47036.0
     index_calories: 0.0
     dju: 407.1
-    conso_gaz: 9279.0
-    conso_gaz_par_dju: 22.792925571112747
-    calories_produites: 0.0
-    calories_par_dju: 0.0
-    rendement: null
   - date: '2013-04-26'
     index_gaz: 52558.0
     index_calories: 0.0
     dju: 254.5
-    conso_gaz: 5522.0
-    conso_gaz_par_dju: 21.69744597249509
-    calories_produites: 0.0
-    calories_par_dju: 0.0
-    rendement: null
   - date: '2013-05-30'
     index_gaz: 57678.0
     index_calories: 0.0
     dju: 235.6
-    conso_gaz: 5120.0
-    conso_gaz_par_dju: 21.731748726655347
-    calories_produites: 0.0
-    calories_par_dju: 0.0
-    rendement: null
   - date: '2013-06-06'
     index_gaz: 58248.0
     index_calories: 0.0
     dju: 28.4
-    conso_gaz: 570.0
-    conso_gaz_par_dju: 20.070422535211268
-    calories_produites: 0.0
-    calories_par_dju: 0.0
-    rendement: null
 - nom: 2013-2014
   date_debut: '2013-10-11'
   date_fin: '2014-05-20'
@@ -83,74 +43,34 @@ saisons:
     index_gaz: 58248.0
     index_calories: 0.0
     dju: 0.0
-    conso_gaz: null
-    conso_gaz_par_dju: null
-    calories_produites: null
-    calories_par_dju: null
-    rendement: null
   - date: '2013-11-04'
     index_gaz: 61121.0
     index_calories: 0.0
     dju: 126.1
-    conso_gaz: 2873.0
-    conso_gaz_par_dju: 22.783505154639176
-    calories_produites: 0.0
-    calories_par_dju: 0.0
-    rendement: null
   - date: '2013-11-25'
     index_gaz: 66361.0
     index_calories: 57.6
     dju: 237.1
-    conso_gaz: 5240.0
-    conso_gaz_par_dju: 22.10037958667229
-    calories_produites: 57.6
-    calories_par_dju: 0.2429354702657107
-    rendement: 109.92366412213741
   - date: '2014-01-28'
     index_gaz: 82981.0
     index_calories: 268.0
     dju: 777.1
-    conso_gaz: 16620.0
-    conso_gaz_par_dju: 21.387208853429417
-    calories_produites: 210.4
-    calories_par_dju: 0.2707502251962424
-    rendement: 126.59446450060167
   - date: '2014-02-28'
     index_gaz: 90674.0
     index_calories: 366.0
     dju: 357.8
-    conso_gaz: 7693.0
-    conso_gaz_par_dju: 21.50083845723868
-    calories_produites: 98.0
-    calories_par_dju: 0.2738960313024036
-    rendement: 127.38853503184713
   - date: '2014-04-01'
     index_gaz: 96446.0
     index_calories: 439.0
     dju: 302.1
-    conso_gaz: 5772.0
-    conso_gaz_par_dju: 19.106256206554118
-    calories_produites: 73.0
-    calories_par_dju: 0.24164184045018203
-    rendement: 126.47262647262647
   - date: '2014-04-29'
     index_gaz: 99438.0
     index_calories: 478.0
     dju: 182.8
-    conso_gaz: 2992.0
-    conso_gaz_par_dju: 16.36761487964989
-    calories_produites: 39.0
-    calories_par_dju: 0.21334792122538293
-    rendement: 130.3475935828877
   - date: '2014-05-20'
     index_gaz: 101451.0
     index_calories: 504.0
     dju: 106.9
-    conso_gaz: 2013.0
-    conso_gaz_par_dju: 18.83068288119738
-    calories_produites: 26.0
-    calories_par_dju: 0.24321796071094479
-    rendement: 129.1604570293095
 - nom: 2014-2015
   date_debut: '2014-10-09'
   date_fin: '2015-05-20'
@@ -159,83 +79,38 @@ saisons:
     index_gaz: 101451.0
     index_calories: 504.0
     dju: 0.0
-    conso_gaz: null
-    conso_gaz_par_dju: null
-    calories_produites: null
-    calories_par_dju: null
-    rendement: null
   - date: '2014-10-30'
     index_gaz: 103249.0
     index_calories: 527.0
     dju: 96.9
-    conso_gaz: 1798.0
-    conso_gaz_par_dju: 18.555211558307533
-    calories_produites: 23.0
-    calories_par_dju: 0.2373581011351909
-    rendement: 127.91991101223581
   - date: '2014-11-28'
     index_gaz: 108224.0
     index_calories: 591.0
     dju: 232.9
-    conso_gaz: 4975.0
-    conso_gaz_par_dju: 21.361099184199226
-    calories_produites: 64.0
-    calories_par_dju: 0.274796049806784
-    rendement: 128.643216080402
   - date: '2014-12-31'
     index_gaz: 117371.0
     index_calories: 706.0
     dju: 427.8
-    conso_gaz: 9147.0
-    conso_gaz_par_dju: 21.38148667601683
-    calories_produites: 115.0
-    calories_par_dju: 0.26881720430107525
-    rendement: 125.724281185088
   - date: '2015-02-02'
     index_gaz: 127338.0
     index_calories: 832.0
     dju: 462.0
-    conso_gaz: 9967.0
-    conso_gaz_par_dju: 21.573593073593074
-    calories_produites: 126.0
-    calories_par_dju: 0.2727272727272727
-    rendement: 126.41717668305408
   - date: '2015-02-27'
     index_gaz: 135160.0
     index_calories: 931.0
     dju: 356.3
-    conso_gaz: 7822.0
-    conso_gaz_par_dju: 21.9534100477126
-    calories_produites: 99.0
-    calories_par_dju: 0.27785573954532694
-    rendement: 126.5660956277167
   - date: '2015-03-27'
     index_gaz: 141739.0
     index_calories: 1016.0
     dju: 320.0
-    conso_gaz: 6579.0
-    conso_gaz_par_dju: 20.559375
-    calories_produites: 85.0
-    calories_par_dju: 0.265625
-    rendement: 129.19896640826875
   - date: '2015-04-28'
     index_gaz: 145884.0
     index_calories: 1071.0
     dju: 225.5
-    conso_gaz: 4145.0
-    conso_gaz_par_dju: 18.38137472283814
-    calories_produites: 55.0
-    calories_par_dju: 0.24390243902439024
-    rendement: 132.68998793727383
   - date: '2015-05-20'
     index_gaz: 147974.0
     index_calories: 1098.0
     dju: 115.5
-    conso_gaz: 2090.0
-    conso_gaz_par_dju: 18.095238095238095
-    calories_produites: 27.0
-    calories_par_dju: 0.23376623376623376
-    rendement: 129.1866028708134
 - nom: 2015-2016
   date_debut: '2015-09-29'
   date_fin: '2016-06-09'
@@ -244,92 +119,42 @@ saisons:
     index_gaz: 147974.0
     index_calories: 1093.0
     dju: 0.0
-    conso_gaz: null
-    conso_gaz_par_dju: null
-    calories_produites: null
-    calories_par_dju: null
-    rendement: null
   - date: '2015-11-04'
     index_gaz: 153273.0
     index_calories: 1167.0
     dju: 236.6
-    conso_gaz: 5299.0
-    conso_gaz_par_dju: 22.39644970414201
-    calories_produites: 74.0
-    calories_par_dju: 0.3127641589180051
-    rendement: 139.64899037554255
   - date: '2015-12-03'
     index_gaz: 157900.0
     index_calories: 1228.0
     dju: 222.0
-    conso_gaz: 4627.0
-    conso_gaz_par_dju: 20.84234234234234
-    calories_produites: 61.0
-    calories_par_dju: 0.2747747747747748
-    rendement: 131.83488221309705
   - date: '2016-01-05'
     index_gaz: 164515.0
     index_calories: 1314.0
     dju: 304.0
-    conso_gaz: 6615.0
-    conso_gaz_par_dju: 21.75986842105263
-    calories_produites: 86.0
-    calories_par_dju: 0.28289473684210525
-    rendement: 130.00755857898716
   - date: '2016-01-27'
     index_gaz: 171179.0
     index_calories: 1398.0
     dju: 300.5
-    conso_gaz: 6664.0
-    conso_gaz_par_dju: 22.176372712146424
-    calories_produites: 84.0
-    calories_par_dju: 0.2795341098169717
-    rendement: 126.05042016806722
   - date: '2016-03-01'
     index_gaz: 180145.0
     index_calories: 1512.0
     dju: 415.4
-    conso_gaz: 8966.0
-    conso_gaz_par_dju: 21.584015406836784
-    calories_produites: 114.0
-    calories_par_dju: 0.274434280211844
-    rendement: 127.14699977693509
   - date: '2016-04-01'
     index_gaz: 187757.0
     index_calories: 1610.0
     dju: 359.3
-    conso_gaz: 7612.0
-    conso_gaz_par_dju: 21.18563874199833
-    calories_produites: 98.0
-    calories_par_dju: 0.2727525744503201
-    rendement: 128.74408828166054
   - date: '2016-05-02'
     index_gaz: 193154.0
     index_calories: 1680.0
     dju: 271.2
-    conso_gaz: 5397.0
-    conso_gaz_par_dju: 19.90044247787611
-    calories_produites: 70.0
-    calories_par_dju: 0.25811209439528027
-    rendement: 129.70168612191958
   - date: '2016-06-02'
     index_gaz: 195342.0
     index_calories: 1709.0
     dju: 116.2
-    conso_gaz: 2188.0
-    conso_gaz_par_dju: 18.82960413080895
-    calories_produites: 29.0
-    calories_par_dju: 0.2495697074010327
-    rendement: 132.54113345521023
   - date: '2016-06-09'
     index_gaz: 195662.0
     index_calories: 1713.0
     dju: 11.1
-    conso_gaz: 320.0
-    conso_gaz_par_dju: 28.82882882882883
-    calories_produites: 4.0
-    calories_par_dju: 0.3603603603603604
-    rendement: 125.0
 - nom: 2016-2017
   date_debut: '2016-10-03'
   date_fin: '2017-06-07'
@@ -338,83 +163,38 @@ saisons:
     index_gaz: 195662.0
     index_calories: 1713.0
     dju: 0.0
-    conso_gaz: null
-    conso_gaz_par_dju: null
-    calories_produites: null
-    calories_par_dju: null
-    rendement: null
   - date: '2016-11-02'
     index_gaz: 199981.0
     index_calories: 1769.0
     dju: 204.0
-    conso_gaz: 4319.0
-    conso_gaz_par_dju: 21.17156862745098
-    calories_produites: 56.0
-    calories_par_dju: 0.27450980392156865
-    rendement: 129.65964343598054
   - date: '2016-12-02'
     index_gaz: 206970.0
     index_calories: 1855.0
     dju: 331.3
-    conso_gaz: 6989.0
-    conso_gaz_par_dju: 21.095683670389374
-    calories_produites: 86.0
-    calories_par_dju: 0.2595834591005131
-    rendement: 123.05050794105021
   - date: '2017-01-30'
     index_gaz: 226452.0
     index_calories: 2099.0
     dju: 917.4
-    conso_gaz: 19482.0
-    conso_gaz_par_dju: 21.236102027468934
-    calories_produites: 244.0
-    calories_par_dju: 0.2659690429474602
-    rendement: 125.24381480340827
   - date: '2017-03-02'
     index_gaz: 234426.0
     index_calories: 2195.0
     dju: 352.7
-    conso_gaz: 7974.0
-    conso_gaz_par_dju: 22.608449106889708
-    calories_produites: 96.0
-    calories_par_dju: 0.2721859937624043
-    rendement: 120.39127163280664
   - date: '2017-03-30'
     index_gaz: 238595.0
     index_calories: 2251.0
     dju: 233.2
-    conso_gaz: 4169.0
-    conso_gaz_par_dju: 17.87735849056604
-    calories_produites: 56.0
-    calories_par_dju: 0.24013722126929676
-    rendement: 134.3247781242504
   - date: '2017-04-28'
     index_gaz: 241830.0
     index_calories: 2294.0
     dju: 243.2
-    conso_gaz: 3235.0
-    conso_gaz_par_dju: 13.301809210526317
-    calories_produites: 43.0
-    calories_par_dju: 0.1768092105263158
-    rendement: 132.92117465224112
   - date: '2017-06-02'
     index_gaz: 243683.0
     index_calories: 2320.0
     dju: 117.2
-    conso_gaz: 1853.0
-    conso_gaz_par_dju: 15.810580204778157
-    calories_produites: 26.0
-    calories_par_dju: 0.22184300341296928
-    rendement: 140.31300593631948
   - date: '2017-06-07'
     index_gaz: 243814.0
     index_calories: 2322.0
     dju: 12.1
-    conso_gaz: 131.0
-    conso_gaz_par_dju: 10.826446280991735
-    calories_produites: 2.0
-    calories_par_dju: 0.1652892561983471
-    rendement: 152.67175572519085
 - nom: 2017-2018
   date_debut: '2017-09-19'
   date_fin: '2018-06-19'
@@ -423,92 +203,42 @@ saisons:
     index_gaz: 243814.0
     index_calories: 2322.0
     dju: 0.0
-    conso_gaz: null
-    conso_gaz_par_dju: null
-    calories_produites: null
-    calories_par_dju: null
-    rendement: null
   - date: '2017-11-02'
     index_gaz: 248376.0
     index_calories: 2379.0
     dju: 189.4
-    conso_gaz: 4562.0
-    conso_gaz_par_dju: 24.086589229144668
-    calories_produites: 57.0
-    calories_par_dju: 0.30095036958817317
-    rendement: 124.94519947391495
   - date: '2017-12-01'
     index_gaz: 255547.0
     index_calories: 2468.0
     dju: 317.4
-    conso_gaz: 7171.0
-    conso_gaz_par_dju: 22.592942659105233
-    calories_produites: 89.0
-    calories_par_dju: 0.2804032766225583
-    rendement: 124.11100264956072
   - date: '2018-01-02'
     index_gaz: 265812.0
     index_calories: 2594.0
     dju: 401.2
-    conso_gaz: 10265.0
-    conso_gaz_par_dju: 25.585742771684945
-    calories_produites: 126.0
-    calories_par_dju: 0.3140578265204387
-    rendement: 122.74719922065272
   - date: '2018-02-02'
     index_gaz: 274792.0
     index_calories: 2705.0
     dju: 346.5
-    conso_gaz: 8980.0
-    conso_gaz_par_dju: 25.916305916305916
-    calories_produites: 111.0
-    calories_par_dju: 0.3203463203463203
-    rendement: 123.60801781737194
   - date: '2018-03-02'
     index_gaz: 285540.0
     index_calories: 2838.0
     dju: 473.1
-    conso_gaz: 10748.0
-    conso_gaz_par_dju: 22.718241386599026
-    calories_produites: 133.0
-    calories_par_dju: 0.28112449799196787
-    rendement: 123.74395236323036
   - date: '2018-04-04'
     index_gaz: 294856.0
     index_calories: 2953.0
     dju: 363.1
-    conso_gaz: 9316.0
-    conso_gaz_par_dju: 25.656843844670888
-    calories_produites: 115.0
-    calories_par_dju: 0.31671715780776644
-    rendement: 123.44353799914127
   - date: '2018-05-03'
     index_gaz: 298389.0
     index_calories: 2998.0
     dju: 159.4
-    conso_gaz: 3533.0
-    conso_gaz_par_dju: 22.164366373902133
-    calories_produites: 45.0
-    calories_par_dju: 0.2823086574654956
-    rendement: 127.3705066515709
   - date: '2018-06-04'
     index_gaz: 299493.0
     index_calories: 3014.0
     dju: 68.7
-    conso_gaz: 1104.0
-    conso_gaz_par_dju: 16.069868995633186
-    calories_produites: 16.0
-    calories_par_dju: 0.2328966521106259
-    rendement: 144.92753623188406
   - date: '2018-06-19'
     index_gaz: 299657.0
     index_calories: 3017.0
     dju: 12.1
-    conso_gaz: 164.0
-    conso_gaz_par_dju: 13.553719008264464
-    calories_produites: 3.0
-    calories_par_dju: 0.24793388429752067
-    rendement: 182.9268292682927
 - nom: 2018-2019
   date_debut: '2018-09-27'
   date_fin: '2019-06-17'
@@ -517,92 +247,42 @@ saisons:
     index_gaz: 299657.0
     index_calories: 3017.0
     dju: 0.0
-    conso_gaz: null
-    conso_gaz_par_dju: null
-    calories_produites: null
-    calories_par_dju: null
-    rendement: null
   - date: '2018-10-29'
     index_gaz: 304549.0
     index_calories: 3078.0
     dju: 145.3
-    conso_gaz: 4892.0
-    conso_gaz_par_dju: 33.668272539573294
-    calories_produites: 61.0
-    calories_par_dju: 0.41982105987611834
-    rendement: 124.69337694194604
   - date: '2018-12-04'
     index_gaz: 314293.0
     index_calories: 3198.0
     dju: 356.8
-    conso_gaz: 9744.0
-    conso_gaz_par_dju: 27.309417040358742
-    calories_produites: 120.0
-    calories_par_dju: 0.3363228699551569
-    rendement: 123.15270935960592
   - date: '2018-12-28'
     index_gaz: 321355.0
     index_calories: 3286.0
     dju: 295.6
-    conso_gaz: 7062.0
-    conso_gaz_par_dju: 23.89039242219215
-    calories_produites: 88.0
-    calories_par_dju: 0.2976995940460081
-    rendement: 124.61059190031152
   - date: '2019-01-31'
     index_gaz: 332614.0
     index_calories: 3426.0
     dju: 488.3
-    conso_gaz: 11259.0
-    conso_gaz_par_dju: 23.057546590210936
-    calories_produites: 140.0
-    calories_par_dju: 0.2867089903747696
-    rendement: 124.34496846966871
   - date: '2019-02-27'
     index_gaz: 340240.0
     index_calories: 3521.0
     dju: 325.5
-    conso_gaz: 7626.0
-    conso_gaz_par_dju: 23.428571428571427
-    calories_produites: 95.0
-    calories_par_dju: 0.29185867895545314
-    rendement: 124.57382638342513
   - date: '2019-03-26'
     index_gaz: 345578.0
     index_calories: 3592.0
     dju: 257.0
-    conso_gaz: 5338.0
-    conso_gaz_par_dju: 20.770428015564203
-    calories_produites: 71.0
-    calories_par_dju: 0.27626459143968873
-    rendement: 133.00861745972276
   - date: '2019-04-25'
     index_gaz: 350201.0
     index_calories: 3654.0
     dju: 224.5
-    conso_gaz: 4623.0
-    conso_gaz_par_dju: 20.592427616926503
-    calories_produites: 62.0
-    calories_par_dju: 0.27616926503340755
-    rendement: 134.11204845338526
   - date: '2019-05-28'
     index_gaz: 353710.0
     index_calories: 3700.0
     dju: 200.2
-    conso_gaz: 3509.0
-    conso_gaz_par_dju: 17.52747252747253
-    calories_produites: 46.0
-    calories_par_dju: 0.2297702297702298
-    rendement: 131.0914790538615
   - date: '2019-06-17'
     index_gaz: 354896.0
     index_calories: 3716.0
     dju: 44.5
-    conso_gaz: 1186.0
-    conso_gaz_par_dju: 26.651685393258425
-    calories_produites: 16.0
-    calories_par_dju: 0.3595505617977528
-    rendement: 134.9072512647555
 - nom: 2019-2020
   date_debut: '2019-09-30'
   date_fin: '2020-05-02'
@@ -611,83 +291,38 @@ saisons:
     index_gaz: 354896.0
     index_calories: 3716.0
     dju: 0.0
-    conso_gaz: null
-    conso_gaz_par_dju: null
-    calories_produites: null
-    calories_par_dju: null
-    rendement: null
   - date: '2019-10-30'
     index_gaz: 360182.0
     index_calories: 3784.0
     dju: 144.0
-    conso_gaz: 5286.0
-    conso_gaz_par_dju: 36.708333333333336
-    calories_produites: 68.0
-    calories_par_dju: 0.4722222222222222
-    rendement: 128.64169504351116
   - date: '2019-11-20'
     index_gaz: 365928.0
     index_calories: 3849.0
     dju: 226.8
-    conso_gaz: 5746.0
-    conso_gaz_par_dju: 25.335097001763668
-    calories_produites: 65.0
-    calories_par_dju: 0.2865961199294533
-    rendement: 113.12217194570135
   - date: '2019-11-26'
     index_gaz: 367090.0
     index_calories: 3868.0
     dju: 57.3
-    conso_gaz: 1162.0
-    conso_gaz_par_dju: 20.279232111692846
-    calories_produites: 19.0
-    calories_par_dju: 0.33158813263525305
-    rendement: 163.51118760757316
   - date: '2019-12-09'
     index_gaz: 370706.0
     index_calories: 3913.0
     dju: 164.1
-    conso_gaz: 3616.0
-    conso_gaz_par_dju: 22.035344302254725
-    calories_produites: 45.0
-    calories_par_dju: 0.27422303473491777
-    rendement: 124.44690265486726
   - date: '2019-12-31'
     index_gaz: 376659.0
     index_calories: 3998.0
     dju: 239.1
-    conso_gaz: 5953.0
-    conso_gaz_par_dju: 24.89753241321623
-    calories_produites: 85.0
-    calories_par_dju: 0.35549979088247596
-    rendement: 142.78515034436418
   - date: '2020-02-03'
     index_gaz: 387119.0
     index_calories: 4113.0
     dju: 398.5
-    conso_gaz: 10460.0
-    conso_gaz_par_dju: 26.248431618569636
-    calories_produites: 115.0
-    calories_par_dju: 0.28858218318695106
-    rendement: 109.94263862332696
   - date: '2020-02-20'
     index_gaz: 392686.0
     index_calories: 4185.0
     dju: 174.3
-    conso_gaz: 5567.0
-    conso_gaz_par_dju: 31.939185312679285
-    calories_produites: 72.0
-    calories_par_dju: 0.41308089500860584
-    rendement: 129.3335728399497
   - date: '2020-05-02'
     index_gaz: 408799.0
     index_calories: 4379.0
     dju: 560.6
-    conso_gaz: 16113.0
-    conso_gaz_par_dju: 28.742418836960397
-    calories_produites: 194.0
-    calories_par_dju: 0.34605779521940777
-    rendement: 120.39967727921554
 - nom: 2020-2021
   date_debut: '2020-09-25'
   date_fin: '2021-06-07'
@@ -696,74 +331,34 @@ saisons:
     index_gaz: 408802.0
     index_calories: 4379.0
     dju: 0.0
-    conso_gaz: null
-    conso_gaz_par_dju: null
-    calories_produites: null
-    calories_par_dju: null
-    rendement: null
   - date: '2020-11-02'
     index_gaz: 413601.0
     index_calories: 4446.0
     dju: 213.4
-    conso_gaz: 4799.0
-    conso_gaz_par_dju: 22.488284910965323
-    calories_produites: 67.0
-    calories_par_dju: 0.3139643861293346
-    rendement: 139.61241925401126
   - date: '2020-11-27'
     index_gaz: 419200.0
     index_calories: 4519.0
     dju: 219.5
-    conso_gaz: 5599.0
-    conso_gaz_par_dju: 25.507972665148063
-    calories_produites: 73.0
-    calories_par_dju: 0.3325740318906606
-    rendement: 130.3804250759064
   - date: '2020-12-29'
     index_gaz: 429459.0
     index_calories: 4618.0
     dju: 382.6
-    conso_gaz: 10259.0
-    conso_gaz_par_dju: 26.81390486147412
-    calories_produites: 99.0
-    calories_par_dju: 0.25875588081547307
-    rendement: 96.50063359001852
   - date: '2021-02-24'
     index_gaz: 444586.0
     index_calories: 4831.0
     dju: 759.0
-    conso_gaz: 15127.0
-    conso_gaz_par_dju: 19.930171277997363
-    calories_produites: 213.0
-    calories_par_dju: 0.28063241106719367
-    rendement: 140.80782706418987
   - date: '2021-03-26'
     index_gaz: 451659.0
     index_calories: 4924.0
     dju: 343.4
-    conso_gaz: 7073.0
-    conso_gaz_par_dju: 20.596971461852068
-    calories_produites: 93.0
-    calories_par_dju: 0.27082119976703556
-    rendement: 131.4859324190584
   - date: '2021-04-28'
     index_gaz: 457867.0
     index_calories: 5006.0
     dju: 307.7
-    conso_gaz: 6208.0
-    conso_gaz_par_dju: 20.175495612609687
-    calories_produites: 82.0
-    calories_par_dju: 0.26649333766655836
-    rendement: 132.08762886597938
   - date: '2021-06-07'
     index_gaz: 462169.0
     index_calories: 5063.0
     dju: 203.6
-    conso_gaz: 4302.0
-    conso_gaz_par_dju: 21.12966601178782
-    calories_produites: 57.0
-    calories_par_dju: 0.27996070726915523
-    rendement: 132.49651324965131
 - nom: 2021-2022
   date_debut: '2021-09-28'
   date_fin: '2022-05-11'
@@ -772,83 +367,38 @@ saisons:
     index_gaz: 462178.0
     index_calories: 5063.0
     dju: 0.0
-    conso_gaz: null
-    conso_gaz_par_dju: null
-    calories_produites: null
-    calories_par_dju: null
-    rendement: null
   - date: '2021-10-27'
     index_gaz: 466278.0
     index_calories: 5115.0
     dju: 181.3
-    conso_gaz: 4100.0
-    conso_gaz_par_dju: 22.614451185879755
-    calories_produites: 52.0
-    calories_par_dju: 0.2868174296745725
-    rendement: 126.82926829268293
   - date: '2021-12-02'
     index_gaz: 475648.0
     index_calories: 5232.0
     dju: 402.1
-    conso_gaz: 9370.0
-    conso_gaz_par_dju: 23.302661029594628
-    calories_produites: 117.0
-    calories_par_dju: 0.2909723949266351
-    rendement: 124.8665955176094
   - date: '2022-01-05'
     index_gaz: 484484.0
     index_calories: 5344.0
     dju: 391.3
-    conso_gaz: 8836.0
-    conso_gaz_par_dju: 22.581139790442116
-    calories_produites: 112.0
-    calories_par_dju: 0.28622540250447226
-    rendement: 126.75418741511997
   - date: '2022-01-31'
     index_gaz: 493145.0
     index_calories: 5455.0
     dju: 383.6
-    conso_gaz: 8661.0
-    conso_gaz_par_dju: 22.578206465067776
-    calories_produites: 111.0
-    calories_par_dju: 0.28936392075078204
-    rendement: 128.16072047107724
   - date: '2022-03-01'
     index_gaz: 500970.0
     index_calories: 5555.0
     dju: 326.7
-    conso_gaz: 7825.0
-    conso_gaz_par_dju: 23.951637588001226
-    calories_produites: 100.0
-    calories_par_dju: 0.3060912151821243
-    rendement: 127.79552715654951
   - date: '2022-04-01'
     index_gaz: 507334.0
     index_calories: 5637.0
     dju: 294.3
-    conso_gaz: 6364.0
-    conso_gaz_par_dju: 21.624193000339787
-    calories_produites: 82.0
-    calories_par_dju: 0.2786272511043153
-    rendement: 128.8497800125707
   - date: '2022-04-27'
     index_gaz: 512309.0
     index_calories: 5698.0
     dju: 195.7
-    conso_gaz: 4975.0
-    conso_gaz_par_dju: 25.421563617782322
-    calories_produites: 61.0
-    calories_par_dju: 0.3117015840572305
-    rendement: 122.61306532663316
   - date: '2022-05-11'
     index_gaz: 513791.0
     index_calories: 5715.0
     dju: 49.7
-    conso_gaz: 1482.0
-    conso_gaz_par_dju: 29.81891348088531
-    calories_produites: 17.0
-    calories_par_dju: 0.34205231388329976
-    rendement: 114.7098515519568
 - nom: 2022-2023
   date_debut: '2022-09-27'
   date_fin: '2023-06-02'
@@ -857,92 +407,42 @@ saisons:
     index_gaz: 514431.0
     index_calories: 5717.0
     dju: 0.0
-    conso_gaz: null
-    conso_gaz_par_dju: null
-    calories_produites: null
-    calories_par_dju: null
-    rendement: null
   - date: '2022-10-31'
     index_gaz: 516483.0
     index_calories: 5764.0
     dju: 113.8
-    conso_gaz: 2052.0
-    conso_gaz_par_dju: 18.031634446397188
-    calories_produites: 47.0
-    calories_par_dju: 0.4130052724077329
-    rendement: 229.04483430799218
   - date: '2022-11-24'
     index_gaz: 520074.0
     index_calories: 5800.0
     dju: 195.7
-    conso_gaz: 3591.0
-    conso_gaz_par_dju: 18.349514563106798
-    calories_produites: 36.0
-    calories_par_dju: 0.18395503321410323
-    rendement: 100.25062656641603
   - date: '2022-12-24'
     index_gaz: 529000.0
     index_calories: 5902.0
     dju: 424.3
-    conso_gaz: 8926.0
-    conso_gaz_par_dju: 21.037002121140702
-    calories_produites: 102.0
-    calories_par_dju: 0.24039594626443553
-    rendement: 114.27291059825228
   - date: '2023-01-30'
     index_gaz: 536662.0
     index_calories: 6015.0
     dju: 424.6
-    conso_gaz: 7662.0
-    conso_gaz_par_dju: 18.04521902967499
-    calories_produites: 113.0
-    calories_par_dju: 0.26613283089967027
-    rendement: 147.48107543722267
   - date: '2023-02-28'
     index_gaz: 543027.0
     index_calories: 6100.0
     dju: 367.6
-    conso_gaz: 6365.0
-    conso_gaz_par_dju: 17.315016322089225
-    calories_produites: 85.0
-    calories_par_dju: 0.2312295973884657
-    rendement: 133.5428122545169
   - date: '2023-03-30'
     index_gaz: 547421.0
     index_calories: 6157.0
     dju: 291.0
-    conso_gaz: 4394.0
-    conso_gaz_par_dju: 15.099656357388316
-    calories_produites: 57.0
-    calories_par_dju: 0.1958762886597938
-    rendement: 129.7223486572599
   - date: '2023-04-28'
     index_gaz: 550458.0
     index_calories: 6207.0
     dju: 250.4
-    conso_gaz: 3037.0
-    conso_gaz_par_dju: 12.128594249201278
-    calories_produites: 50.0
-    calories_par_dju: 0.1996805111821086
-    rendement: 164.63615409944023
   - date: '2023-05-10'
     index_gaz: 553446.0
     index_calories: 6237.0
     dju: 53.9
-    conso_gaz: 2988.0
-    conso_gaz_par_dju: 55.43599257884972
-    calories_produites: 30.0
-    calories_par_dju: 0.5565862708719852
-    rendement: 100.40160642570282
   - date: '2023-06-02'
     index_gaz: 554279.0
     index_calories: 6249.0
     dju: 79.6
-    conso_gaz: 833.0
-    conso_gaz_par_dju: 10.464824120603016
-    calories_produites: 12.0
-    calories_par_dju: 0.15075376884422112
-    rendement: 144.0576230492197
 - nom: 2023-2024
   date_debut: '2023-10-16'
   date_fin: '2024-05-21'
@@ -951,65 +451,30 @@ saisons:
     index_gaz: 554279.0
     index_calories: 6249.0
     dju: 0.0
-    conso_gaz: null
-    conso_gaz_par_dju: null
-    calories_produites: null
-    calories_par_dju: null
-    rendement: null
   - date: '2023-12-26'
     index_gaz: 566231.0
     index_calories: 6407.0
     dju: 656.5
-    conso_gaz: 11952.0
-    conso_gaz_par_dju: 18.205635948210205
-    calories_produites: 158.0
-    calories_par_dju: 0.24067022086824066
-    rendement: 132.19544846050871
   - date: '2024-01-28'
     index_gaz: 576045.0
     index_calories: 6532.0
     dju: 452.3
-    conso_gaz: 9814.0
-    conso_gaz_par_dju: 21.697988061021444
-    calories_produites: 125.0
-    calories_par_dju: 0.276365244306876
-    rendement: 127.36906460158957
   - date: '2024-02-29'
     index_gaz: 582444.0
     index_calories: 6614.0
     dju: 305.2
-    conso_gaz: 6399.0
-    conso_gaz_par_dju: 20.966579292267365
-    calories_produites: 82.0
-    calories_par_dju: 0.2686762778505898
-    rendement: 128.14502265979058
   - date: '2024-03-20'
     index_gaz: 586612.0
     index_calories: 6669.0
     dju: 183.6
-    conso_gaz: 4168.0
-    conso_gaz_par_dju: 22.70152505446623
-    calories_produites: 55.0
-    calories_par_dju: 0.2995642701525055
-    rendement: 131.95777351247602
   - date: '2024-04-28'
     index_gaz: 592730.0
     index_calories: 6749.0
     dju: 302.9
-    conso_gaz: 6118.0
-    conso_gaz_par_dju: 20.198085176625952
-    calories_produites: 80.0
-    calories_par_dju: 0.2641135688345989
-    rendement: 130.76168682576005
   - date: '2024-05-21'
     index_gaz: 594387.0
     index_calories: 6772.0
     dju: 87.3
-    conso_gaz: 1657.0
-    conso_gaz_par_dju: 18.98052691867125
-    calories_produites: 23.0
-    calories_par_dju: 0.2634593356242841
-    rendement: 138.80506940253468
 - nom: 2024-2025
   date_debut: '2024-09-16'
   date_fin: '2025-06-01'
@@ -1018,56 +483,26 @@ saisons:
     index_gaz: 594387.0
     index_calories: 6772.0
     dju: 0.0
-    conso_gaz: null
-    conso_gaz_par_dju: null
-    calories_produites: null
-    calories_par_dju: null
-    rendement: null
   - date: '2024-11-25'
     index_gaz: 600543.0
     index_calories: 6859.0
     dju: 425.8
-    conso_gaz: 6156.0
-    conso_gaz_par_dju: 14.457491780178486
-    calories_produites: 87.0
-    calories_par_dju: 0.20432127759511506
-    rendement: 141.32553606237818
   - date: '2025-01-25'
     index_gaz: 617523.0
     index_calories: 7058.0
     dju: 804.1
-    conso_gaz: 16980.0
-    conso_gaz_par_dju: 21.116776520333293
-    calories_produites: 199.0
-    calories_par_dju: 0.24748165651038428
-    rendement: 117.1967020023557
   - date: '2025-03-25'
     index_gaz: 632978.0
     index_calories: 7247.0
     dju: 693.5
-    conso_gaz: 15455.0
-    conso_gaz_par_dju: 22.285508291276134
-    calories_produites: 189.0
-    calories_par_dju: 0.2725306416726748
-    rendement: 122.29052086703331
   - date: '2025-04-24'
     index_gaz: 637309.0
     index_calories: 7303.0
     dju: 188.8
-    conso_gaz: 4331.0
-    conso_gaz_par_dju: 22.939618644067796
-    calories_produites: 56.0
-    calories_par_dju: 0.2966101694915254
-    rendement: 129.30039251904873
   - date: '2025-06-01'
     index_gaz: 640262.0
     index_calories: 7341.0
     dju: 107.2
-    conso_gaz: 2953.0
-    conso_gaz_par_dju: 27.546641791044774
-    calories_produites: 38.0
-    calories_par_dju: 0.3544776119402985
-    rendement: 128.6826955638334
 - nom: 2025-2026
   date_debut: '2025-09-29'
   date_fin: '2026-05-27'
@@ -1076,92 +511,42 @@ saisons:
     index_gaz: 640262.0
     index_calories: 7341.0
     dju: 0.0
-    conso_gaz: null
-    conso_gaz_par_dju: null
-    calories_produites: null
-    calories_par_dju: null
-    rendement: null
   - date: '2025-10-30'
     index_gaz: 644347.0
     index_calories: 7394.0
     dju: 171.5
-    conso_gaz: 4085.0
-    conso_gaz_par_dju: 23.81924198250729
-    calories_produites: 53.0
-    calories_par_dju: 0.30903790087463556
-    rendement: 129.74296205630355
   - date: '2025-12-02'
     index_gaz: 650987.0
     index_calories: 7474.0
     dju: 314.0
-    conso_gaz: 6640.0
-    conso_gaz_par_dju: 21.146496815286625
-    calories_produites: 80.0
-    calories_par_dju: 0.25477707006369427
-    rendement: 120.48192771084338
   - date: '2025-12-23'
     index_gaz: 655034.0
     index_calories: 7524.0
     dju: 190.9
-    conso_gaz: 4047.0
-    conso_gaz_par_dju: 21.199580932425352
-    calories_produites: 50.0
-    calories_par_dju: 0.2619172341540073
-    rendement: 123.54830738818879
   - date: '2026-01-29'
     index_gaz: 665855.0
     index_calories: 7637.0
     dju: 525.1
-    conso_gaz: 10821.0
-    conso_gaz_par_dju: 20.60750333269853
-    calories_produites: 113.0
-    calories_par_dju: 0.21519710531327366
-    rendement: 104.42657795028185
   - date: '2026-02-24'
     index_gaz: 671656.0
     index_calories: 7705.0
     dju: 261.0
-    conso_gaz: 5801.0
-    conso_gaz_par_dju: 22.226053639846743
-    calories_produites: 68.0
-    calories_par_dju: 0.26053639846743293
-    rendement: 117.22116876400621
   - date: '2026-03-25'
     index_gaz: 676439.0
     index_calories: 7762.0
     dju: 230.5
-    conso_gaz: 4783.0
-    conso_gaz_par_dju: 20.75054229934924
-    calories_produites: 57.0
-    calories_par_dju: 0.2472885032537961
-    rendement: 119.17206773991218
   - date: '2026-04-22'
     index_gaz: 680600.0
     index_calories: 7809.0
     dju: 193.5
-    conso_gaz: 4161.0
-    conso_gaz_par_dju: 21.503875968992247
-    calories_produites: 47.0
-    calories_par_dju: 0.24289405684754523
-    rendement: 112.95361691900985
   - date: '2026-05-13'
     index_gaz: 683250.0
     index_calories: 7840.0
     dju: 72.3
-    conso_gaz: 2650.0
-    conso_gaz_par_dju: 36.652835408022135
-    calories_produites: 31.0
-    calories_par_dju: 0.42876901798063627
-    rendement: 116.98113207547169
   - date: '2026-05-27'
     index_gaz: 683283.0
     index_calories: 7840.0
     dju: 46.0
-    conso_gaz: 33.0
-    conso_gaz_par_dju: 0.717391304347826
-    calories_produites: 0.0
-    calories_par_dju: 0.0
-    rendement: null
 - nom: 2026-2027
   date_debut: '2026-10-15'
   date_fin: null
