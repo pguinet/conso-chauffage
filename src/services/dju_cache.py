@@ -76,7 +76,7 @@ class DJUCache:
         Returns:
             Clé de cache
         """
-        return f"{date_debut.isoformat()}_{date_fin.isoformat}_{base_temp}"
+        return f"{date_debut.isoformat()}_{date_fin.isoformat()}_{base_temp}"
 
     def get(
         self,
@@ -221,7 +221,7 @@ class DJUCache:
             return dju
 
         # Pas en cache, faire le fetch
-        logger.info(f"DJU non en cache, appel de la fonction de fetch")
+        logger.info("DJU non en cache, appel de la fonction de fetch")
         dju = fetch_function(date_debut, date_fin, base_temp)
 
         # Mettre en cache si succès
