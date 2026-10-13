@@ -183,7 +183,7 @@ Le fichier YAML est relu avant chaque requête (`before_request`) : les modifica
 - Installation Python et dépendances
 - Génération des rapports via script CLI
 - Upload des rapports comme artifacts (90 jours)
-- Déploiement optionnel sur GitHub Pages
+- Déploiement sur GitHub Pages, à la racine du site : https://pguinet.github.io/conso-chauffage/
 
 ### Format de Données (YAML)
 

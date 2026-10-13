@@ -202,7 +202,7 @@ L'application inclut un workflow GitHub Actions (`.github/workflows/generate-rep
 - Se déclenche manuellement ou automatiquement lors de modifications du fichier de données
 - Génère tous les rapports
 - Les stocke comme artifacts (disponibles pendant 90 jours)
-- (Optionnel) Les publie sur GitHub Pages
+- Les publie sur GitHub Pages : https://pguinet.github.io/conso-chauffage/
 
 ## DJU (Degrés Jours Unifiés)
 
