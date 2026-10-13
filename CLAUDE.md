@@ -53,7 +53,8 @@ conso-chauffage/
 │   │   └── rendement.py         # Logique de calcul
 │   ├── rapports/
 │   │   ├── tableau.py           # Génération tableaux HTML/CSV
-│   │   └── graphiques.py        # Génération graphiques Plotly
+│   │   ├── graphiques.py        # Génération graphiques Plotly
+│   │   └── site.py              # Site statique des rapports (navigation commune)
 │   ├── web/
 │   │   ├── app.py               # Application Flask
 │   │   ├── templates/           # Templates HTML
@@ -114,12 +115,21 @@ conso-chauffage/
 - `generer_rapport_saison_html()` : Rapport HTML stylisé avec statistiques
 - `generer_rapport_comparaison_csv()` : Comparaison toutes saisons en CSV
 - `generer_rapport_comparaison_html()` : Tableau comparatif HTML
+- `html_stats_saison()`, `html_tableau_releves()`, `html_tableau_comparaison()` : fragments HTML partagés avec le site
 
 **Graphiques** (graphiques.py)
 - `generer_graphique_rendement_saison()` : Évolution du rendement avec moyenne
 - `generer_graphique_complet_saison()` : 3 graphiques (rendement, conso/DJU, cal/DJU)
 - `generer_graphique_comparaison_saisons()` : 4 graphiques comparatifs (bars)
 - `generer_graphique_rendements_compares()` : Courbes de rendement superposées
+- Fonctions `figure_*()` : construisent les figures, utilisées par les `generer_*()` (fichier autonome, appli web) et par le site
+- `figure_indicateurs_dju()` : conso/DJU et cal./DJU, disponible même sans compteur calories
+
+**Site statique** (site.py)
+- `generer_site()` : `index.html` (une carte par saison), `saison_<nom>.html` (stats, graphiques, relevés, CSV, liens saison précédente/suivante), `comparaison.html` (tableau + graphiques), CSV
+- Barre de navigation commune (Accueil, Comparaison, menu Saisons)
+- `plotly.min.js` écrit une seule fois à côté des pages (site d'environ 4 Mo au lieu de 100 Mo)
+- Supprime les fichiers de l'ancienne génération (`rapport_*.html`, `graphique_*.html`)
 
 #### 4. Interface Web (`src/web/`)
 
@@ -159,8 +169,7 @@ Le fichier YAML est relu avant chaque requête (`before_request`) : les modifica
 #### 6. Script CLI (`scripts/generate_all_reports.py`)
 
 - Chargement des données depuis `data/saisons.yaml`
-- Génération de tous les rapports et graphiques
-- Création d'une page index.html listant tous les rapports
+- Génération du site des rapports via `generer_site()` (point d'entrée : `output/index.html`)
 - Affichage de la progression en console
 
 #### 7. GitHub Actions (`.github/workflows/generate-reports.yml`)

@@ -2,7 +2,8 @@
 
 import csv
 from pathlib import Path
-from typing import List
+from html import escape
+from typing import Callable, List, Optional
 from datetime import datetime
 from src.models import Saison
 from src.calculs import comparer_saisons
@@ -49,16 +50,8 @@ def generer_rapport_saison_csv(saison: Saison, output_path: Path) -> None:
             ])
 
 
-def generer_rapport_saison_html(saison: Saison, output_path: Path) -> None:
-    """
-    Génère un rapport HTML pour une saison.
-
-    Args:
-        saison: La saison à exporter
-        output_path: Chemin du fichier HTML de sortie
-    """
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-
+def html_stats_saison(saison: Saison) -> str:
+    """Fragment HTML : cartes de statistiques d'une saison."""
     # Calcul des statistiques avec gestion des valeurs None
     conso_totale = saison.get_conso_totale_gaz()
     conso_totale_str = f"{conso_totale:.2f}" if conso_totale is not None else "-"
@@ -71,6 +64,86 @@ def generer_rapport_saison_html(saison: Saison, output_path: Path) -> None:
 
     rendement_moyen = saison.get_rendement_moyen()
     rendement_moyen_str = f"{rendement_moyen:.2f}" if rendement_moyen is not None else "-"
+
+    return f"""        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-label">Consommation Totale Gaz</div>
+                <div class="stat-value">{conso_totale_str} m³</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Calories Totales Produites</div>
+                <div class="stat-value">{calories_totales_str}</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">DJU Total</div>
+                <div class="stat-value">{dju_total_str}</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Rendement Moyen</div>
+                <div class="stat-value">{rendement_moyen_str}%</div>
+            </div>
+        </div>
+"""
+
+
+def html_tableau_releves(saison: Saison) -> str:
+    """Fragment HTML : tableau détaillé des relevés d'une saison."""
+    html = """        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th class="number">Index Gaz (m³)</th>
+                    <th class="number">Index Calories</th>
+                    <th class="number">DJU</th>
+                    <th class="number">Conso Gaz (m³)</th>
+                    <th class="number">Conso/DJU</th>
+                    <th class="number">Calories Prod.</th>
+                    <th class="number">Cal./DJU</th>
+                    <th class="number">Rendement (%)</th>
+                </tr>
+            </thead>
+            <tbody>
+"""
+    for releve in saison.releves:
+        # Gestion des valeurs None pour tous les champs
+        date_str = releve.date_releve.strftime('%d/%m/%Y') if releve.date_releve else '-'
+        index_gaz_str = f"{releve.index_gaz:.2f}" if releve.index_gaz is not None else '-'
+        index_calories_str = f"{releve.index_calories:.2f}" if releve.index_calories is not None else '-'
+        dju_str = f"{releve.dju:.1f}" if releve.dju is not None else '-'
+        conso_gaz_str = f"{releve.conso_gaz:.2f}" if releve.conso_gaz is not None else '-'
+        conso_par_dju_str = f"{releve.conso_gaz_par_dju:.4f}" if releve.conso_gaz_par_dju is not None else '-'
+        cal_prod_str = f"{releve.calories_produites:.2f}" if releve.calories_produites is not None else '-'
+        cal_par_dju_str = f"{releve.calories_par_dju:.4f}" if releve.calories_par_dju is not None else '-'
+        rendement_str = f"{releve.rendement:.2f}" if releve.rendement is not None else '-'
+
+        html += f"""                <tr>
+                    <td>{date_str}</td>
+                    <td class="number">{index_gaz_str}</td>
+                    <td class="number">{index_calories_str}</td>
+                    <td class="number">{dju_str}</td>
+                    <td class="number">{conso_gaz_str}</td>
+                    <td class="number">{conso_par_dju_str}</td>
+                    <td class="number">{cal_prod_str}</td>
+                    <td class="number">{cal_par_dju_str}</td>
+                    <td class="number">{rendement_str}</td>
+                </tr>
+"""
+
+    html += """            </tbody>
+        </table>
+"""
+    return html
+
+
+def generer_rapport_saison_html(saison: Saison, output_path: Path) -> None:
+    """
+    Génère un rapport HTML pour une saison.
+
+    Args:
+        saison: La saison à exporter
+        output_path: Chemin du fichier HTML de sortie
+    """
+    output_path.parent.mkdir(parents=True, exist_ok=True)
 
     duree_jours = saison.get_duree_jours()
     duree_str = f"{duree_jours} jours" if duree_jours is not None else "En cours"
@@ -169,71 +242,9 @@ def generer_rapport_saison_html(saison: Saison, output_path: Path) -> None:
             <p><strong>Nombre de relevés:</strong> {len(saison.releves)}</p>
         </div>
 
-        <div class="stats">
-            <div class="stat-card">
-                <div class="stat-label">Consommation Totale Gaz</div>
-                <div class="stat-value">{conso_totale_str} m³</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-label">Calories Totales Produites</div>
-                <div class="stat-value">{calories_totales_str}</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-label">DJU Total</div>
-                <div class="stat-value">{dju_total_str}</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-label">Rendement Moyen</div>
-                <div class="stat-value">{rendement_moyen_str}%</div>
-            </div>
-        </div>
-
+{html_stats_saison(saison)}
         <h2>Relevés Détaillés</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th class="number">Index Gaz (m³)</th>
-                    <th class="number">Index Calories</th>
-                    <th class="number">DJU</th>
-                    <th class="number">Conso Gaz (m³)</th>
-                    <th class="number">Conso/DJU</th>
-                    <th class="number">Calories Prod.</th>
-                    <th class="number">Cal./DJU</th>
-                    <th class="number">Rendement (%)</th>
-                </tr>
-            </thead>
-            <tbody>
-"""
-
-    for releve in saison.releves:
-        # Gestion des valeurs None pour tous les champs
-        date_str = releve.date_releve.strftime('%d/%m/%Y') if releve.date_releve else '-'
-        index_gaz_str = f"{releve.index_gaz:.2f}" if releve.index_gaz is not None else '-'
-        index_calories_str = f"{releve.index_calories:.2f}" if releve.index_calories is not None else '-'
-        dju_str = f"{releve.dju:.1f}" if releve.dju is not None else '-'
-        conso_gaz_str = f"{releve.conso_gaz:.2f}" if releve.conso_gaz is not None else '-'
-        conso_par_dju_str = f"{releve.conso_gaz_par_dju:.4f}" if releve.conso_gaz_par_dju is not None else '-'
-        cal_prod_str = f"{releve.calories_produites:.2f}" if releve.calories_produites is not None else '-'
-        cal_par_dju_str = f"{releve.calories_par_dju:.4f}" if releve.calories_par_dju is not None else '-'
-        rendement_str = f"{releve.rendement:.2f}" if releve.rendement is not None else '-'
-
-        html += f"""                <tr>
-                    <td>{date_str}</td>
-                    <td class="number">{index_gaz_str}</td>
-                    <td class="number">{index_calories_str}</td>
-                    <td class="number">{dju_str}</td>
-                    <td class="number">{conso_gaz_str}</td>
-                    <td class="number">{conso_par_dju_str}</td>
-                    <td class="number">{cal_prod_str}</td>
-                    <td class="number">{cal_par_dju_str}</td>
-                    <td class="number">{rendement_str}</td>
-                </tr>
-"""
-
-    html += f"""            </tbody>
-        </table>
-
+{html_tableau_releves(saison)}
         <div class="footer">
             <p>Rapport généré le {datetime.now().strftime('%d/%m/%Y à %H:%M')}</p>
         </div>
@@ -295,6 +306,66 @@ def generer_rapport_comparaison_csv(saisons: List[Saison], output_path: Path) ->
             ])
 
 
+def html_tableau_comparaison(
+    saisons: List[Saison],
+    lien_saison: Optional[Callable[[str], str]] = None
+) -> str:
+    """
+    Fragment HTML : tableau comparatif des saisons.
+
+    Args:
+        saisons: Liste des saisons à comparer
+        lien_saison: Fonction donnant l'URL de la page d'une saison
+            (nom de saison non cliquable si None)
+    """
+    comparaison = comparer_saisons(saisons)
+
+    html = """        <table>
+            <thead>
+                <tr>
+                    <th>Saison</th>
+                    <th>Période</th>
+                    <th class="number">Durée (j)</th>
+                    <th class="number">Relevés</th>
+                    <th class="number">Conso Gaz (m³)</th>
+                    <th class="number">DJU Total</th>
+                    <th class="number">Conso/DJU</th>
+                    <th class="number">Rendement Moyen</th>
+                    <th class="number">Rendement Global</th>
+                </tr>
+            </thead>
+            <tbody>
+"""
+    for nom_saison, stats in comparaison.items():
+        periode = f"{stats['date_debut'].strftime('%d/%m/%Y')} - "
+        periode += stats['date_fin'].strftime('%d/%m/%Y') if stats['date_fin'] else 'En cours'
+
+        nom_html = escape(stats['nom'])
+        if lien_saison:
+            nom_html = f'<a href="{escape(lien_saison(stats["nom"]))}">{nom_html}</a>'
+        duree_str = str(stats['duree_jours']) if stats['duree_jours'] is not None else '-'
+        rendement_moyen_str = f"{stats['rendement_moyen']:.2f}%" if stats['rendement_moyen'] is not None else '-'
+        rendement_global_str = f"{stats['rendement_global']:.2f}%" if stats['rendement_global'] is not None else '-'
+
+        html += f"""                <tr>
+                    <td><strong>{nom_html}</strong></td>
+                    <td>{periode}</td>
+                    <td class="number">{duree_str}</td>
+                    <td class="number">{stats['nombre_releves']}</td>
+                    <td class="number">{stats['conso_totale_gaz']:.2f}</td>
+                    <td class="number">{stats['dju_total']:.1f}</td>
+                    <td class="number">{stats['conso_par_dju']:.4f}</td>
+                    <td class="number">{rendement_moyen_str}</td>
+                    <td class="number">{rendement_global_str}</td>
+                </tr>
+"""
+
+    html += """            </tbody>
+        </table>
+"""
+    return html
+
+
 def generer_rapport_comparaison_html(saisons: List[Saison], output_path: Path) -> None:
     """
     Génère un rapport HTML comparant plusieurs saisons.
@@ -304,8 +375,6 @@ def generer_rapport_comparaison_html(saisons: List[Saison], output_path: Path) -
         output_path: Chemin du fichier HTML de sortie
     """
     output_path.parent.mkdir(parents=True, exist_ok=True)
-
-    comparaison = comparer_saisons(saisons)
 
     html = """<!DOCTYPE html>
 <html lang="fr">
@@ -373,47 +442,9 @@ def generer_rapport_comparaison_html(saisons: List[Saison], output_path: Path) -
     <div class="container">
         <h1>Comparaison des Saisons de Chauffe</h1>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Saison</th>
-                    <th>Période</th>
-                    <th class="number">Durée (j)</th>
-                    <th class="number">Relevés</th>
-                    <th class="number">Conso Gaz (m³)</th>
-                    <th class="number">DJU Total</th>
-                    <th class="number">Conso/DJU</th>
-                    <th class="number">Rendement Moyen</th>
-                    <th class="number">Rendement Global</th>
-                </tr>
-            </thead>
-            <tbody>
 """
-
-    for nom_saison, stats in comparaison.items():
-        periode = f"{stats['date_debut'].strftime('%d/%m/%Y')} - "
-        periode += stats['date_fin'].strftime('%d/%m/%Y') if stats['date_fin'] else 'En cours'
-
-        duree_str = str(stats['duree_jours']) if stats['duree_jours'] is not None else '-'
-        rendement_moyen_str = f"{stats['rendement_moyen']:.2f}%" if stats['rendement_moyen'] is not None else '-'
-        rendement_global_str = f"{stats['rendement_global']:.2f}%" if stats['rendement_global'] is not None else '-'
-
-        html += f"""                <tr>
-                    <td><strong>{stats['nom']}</strong></td>
-                    <td>{periode}</td>
-                    <td class="number">{duree_str}</td>
-                    <td class="number">{stats['nombre_releves']}</td>
-                    <td class="number">{stats['conso_totale_gaz']:.2f}</td>
-                    <td class="number">{stats['dju_total']:.1f}</td>
-                    <td class="number">{stats['conso_par_dju']:.4f}</td>
-                    <td class="number">{rendement_moyen_str}</td>
-                    <td class="number">{rendement_global_str}</td>
-                </tr>
-"""
-
-    html += f"""            </tbody>
-        </table>
-
+    html += html_tableau_comparaison(saisons)
+    html += f"""
         <div class="footer">
             <p>Rapport généré le {datetime.now().strftime('%d/%m/%Y à %H:%M')}</p>
         </div>

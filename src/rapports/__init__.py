@@ -14,7 +14,10 @@ from .graphiques import (
     generer_graphique_rendements_compares
 )
 
+from .site import generer_site
+
 __all__ = [
+    'generer_site',
     'generer_rapport_saison_csv',
     'generer_rapport_saison_html',
     'generer_rapport_comparaison_csv',

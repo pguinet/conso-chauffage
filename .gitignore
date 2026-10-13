@@ -50,6 +50,7 @@ Thumbs.db
 # Output files (optionally keep these in version control)
 output/*.html
 output/*.csv
+output/*.js
 
 # Logs
 *.log
