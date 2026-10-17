@@ -7,6 +7,7 @@ on:
       - master
     paths:
       - 'data/saisons.yaml'  # Déclencher quand les données changent
+      - 'config/**'          # ou les paramètres de calcul et des graphiques
   schedule:
     - cron: '0 0 1 * *'  # Exécution mensuelle le 1er du mois à minuit
 

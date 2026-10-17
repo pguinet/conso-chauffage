@@ -32,10 +32,10 @@ def rendement_periode():
 def test_valeurs_par_defaut_sans_fichier(config):
     cfg = config()
 
-    assert cfg.get_coefficient_gaz() == 13.5
+    assert cfg.get_coefficient_gaz() == 13.7
     assert cfg.coefficient_gaz_a_confirmer() is True
-    # 12 MWh pour 1000 m³ × 13,5 kWh
-    assert rendement_periode() == pytest.approx(12000 / 13500 * 100)
+    # 12 MWh pour 1000 m³ × 13,7 kWh
+    assert rendement_periode() == pytest.approx(12000 / 13700 * 100)
 
 
 def test_coefficient_configure(config):
@@ -60,8 +60,8 @@ def test_coefficient_invalide_refuse(config, valeur):
         cfg.get_coefficient_gaz()
 
 
-def test_fichier_du_depot_estimation_a_confirmer():
+def test_fichier_du_depot_pression_300_mbar_confirmee():
     cfg = Config()
 
-    assert cfg.get_coefficient_gaz() == 13.5
-    assert cfg.coefficient_gaz_a_confirmer() is True
+    assert cfg.get_coefficient_gaz() == 13.7
+    assert cfg.coefficient_gaz_a_confirmer() is False

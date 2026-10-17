@@ -54,9 +54,16 @@ def test_lecture_affiche_les_donnees_a_jour(fichier):
     assert app_module.data_manager.saisons[0].releves[0].dju == 99.0
 
 
+@pytest.mark.parametrize("a_confirmer", [True, False])
 @pytest.mark.parametrize("url", ["/", "/saison/2025-2026", "/comparaison"])
-def test_avertissement_rendement_dans_l_appli(fichier, url):
+def test_avertissement_rendement_dans_l_appli(fichier, url, a_confirmer, tmp_path, monkeypatch):
+    import src.config
+    (tmp_path / "calculs.yaml").write_text(
+        f"gaz:\n  coefficient_kwh_par_m3: 13.7\n  a_confirmer: {str(a_confirmer).lower()}\n",
+        encoding="utf-8")
+    monkeypatch.setattr(src.config, "_config", src.config.Config(tmp_path))
+
     with app_module.app.test_client() as client:
         page = client.get(url).get_data(as_text=True)
 
-    assert "Rendement indicatif" in page
+    assert ("Rendement indicatif" in page) is a_confirmer

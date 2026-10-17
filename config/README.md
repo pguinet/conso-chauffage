@@ -8,16 +8,19 @@ Paramètres du calcul du rendement :
 
 ```yaml
 gaz:
-  coefficient_kwh_par_m3: 13.5   # coefficient de conversion de la facture de gaz (kWh/m³)
-  a_confirmer: true              # mise en garde dans les rapports tant que non vérifié
+  coefficient_kwh_par_m3: 13.7   # coefficient de conversion du gaz (kWh/m³)
+  a_confirmer: false             # true : mise en garde dans les rapports (valeur non vérifiée)
 compteur_calories:
   kwh_par_unite: 1000.0          # 1 unité du compteur = 1 MWh
 ```
 
 Le coefficient de conversion figure sur les factures de gaz (« coefficient de
 conversion » ou « coefficient thermique »). Il combine le PCS du gaz et la
-correction de pression et de température du compteur. Une fois la valeur
-reportée, passer `a_confirmer` à `false`.
+correction de pression et de température du compteur. La pression de comptage
+de la chaufferie est de 300 mbar (confirmée), d'où un facteur de correction
+d'environ 1,222 et, avec un PCS de 11,2 kWh/m³(n), un coefficient de 13,7 kWh/m³
+(détail du calcul dans `calculs.yaml`). Si une facture indique un autre
+coefficient, reporter sa valeur ; `a_confirmer: true` réaffiche la mise en garde.
 
 
 ## Fichier `graphiques.yaml`
