@@ -115,7 +115,15 @@ def test_anciens_fichiers_supprimes(tmp_path, saisons):
     assert (tmp_path / "notes.txt").exists()
 
 
-def test_avertissement_tant_que_le_coefficient_est_a_confirmer(site):
+def test_avertissement_tant_que_le_coefficient_est_a_confirmer(tmp_path, saisons, monkeypatch):
+    import src.config
+    (tmp_path / "config").mkdir()
+    (tmp_path / "config" / "calculs.yaml").write_text(
+        "gaz:\n  coefficient_kwh_par_m3: 13.0\n  a_confirmer: true\n", encoding="utf-8")
+    monkeypatch.setattr(src.config, "_config", src.config.Config(tmp_path / "config"))
+    site = tmp_path / "site"
+    generer_site(saisons, site)
+
     for page in ("index.html", "saison_2013-2014.html", "comparaison.html"):
         assert "Rendement indicatif" in (site / page).read_text(encoding="utf-8"), page
 

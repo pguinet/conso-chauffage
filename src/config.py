@@ -50,8 +50,8 @@ class Config:
         return valeur
 
     def get_coefficient_gaz(self) -> float:
-        """Coefficient de conversion du gaz en kWh par m³ compté (défaut : 13,5)."""
-        return self._valeur_positive('gaz', 'coefficient_kwh_par_m3', 13.5)
+        """Coefficient de conversion du gaz en kWh par m³ compté (défaut : 13,7)."""
+        return self._valeur_positive('gaz', 'coefficient_kwh_par_m3', 13.7)
 
     def coefficient_gaz_a_confirmer(self) -> bool:
         """Vrai tant que le coefficient du gaz n'a pas été vérifié sur une facture."""
