@@ -177,7 +177,7 @@ Le fichier YAML est relu avant chaque requête (`before_request`) : les modifica
 
 **Déclencheurs** :
 - Workflow manuel (`workflow_dispatch`)
-- Push sur `main` modifiant `data/saisons.yaml`
+- Push sur `master` modifiant `data/saisons.yaml` ou `config/`
 - Planification mensuelle (1er du mois)
 
 **Actions** :
